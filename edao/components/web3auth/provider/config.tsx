@@ -4,7 +4,7 @@ import { Web3AuthNoModal } from "@web3auth/no-modal";
 import { AuthAdapter, WHITE_LABEL_THEME, WhiteLabelData } from "@web3auth/auth-adapter";
 import { Web3AuthContextConfig } from "@web3auth/no-modal-react-hooks";
 
-const clientId = process.env.NEXT_PUBLIC_CLIENT_ID_WEB3AUTH ?? 'BFL1i6MkPAewTqI4tzzfNgJiM_7BPy3D8KioKrTHuMOV4cHgtHRcqoxJ_fC-78bA83H8VM9ojPD4tgMDvdznCXI';
+const clientId = process.env.NEXT_PUBLIC_CLIENT_ID_WEB3AUTH ?? 'BEHBx80k-JYOdHLtRlv_M7jqtjQt1ttpBm8w5S9F0oZQnquwpd4Il_zXFYgToNzz9uJ7XVBa7SVfAjj1PA1A4m8';
 
 const chainConfig = {
     chainNamespace: CHAIN_NAMESPACES.OTHER,
