@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BookOpen, Globe } from 'lucide-react'
 
 export function LoginSignupSocial() {
-  const [isLogin, setIsLogin] = useState(true)
+  const [, setIsLogin] = useState(true)
 
   const SocialButton = ({ children, onClick, className } : { children: React.ReactNode, onClick: () => void, className?: string }) => (
     <Button 

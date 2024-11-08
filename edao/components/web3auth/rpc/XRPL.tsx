@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { IProvider } from "@web3auth/base";
 import { convertStringToHex, Payment, xrpToDrops } from "xrpl";
 

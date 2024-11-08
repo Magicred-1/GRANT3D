@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { XRPLChainProvider } from "@/components/web3auth/XRPLProvider/XRPLWrapper";
+import MainProvider from "@/components/web3auth/MainProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,13 +26,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <XRPLChainProvider>
+      <MainProvider>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           {children}
         </body>
-      </XRPLChainProvider>
+      </MainProvider>
     </html>
   );
 }

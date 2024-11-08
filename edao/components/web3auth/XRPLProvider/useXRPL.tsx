@@ -19,12 +19,6 @@ interface BalanceData {
   balance: any;
 }
 
-interface PrivateKeyData {
-  chain: string;
-  chainName: string;
-  privateKey: string;
-}
-
 interface MultiChainState {
   provider: IProvider | null;
   isConnected: boolean;
@@ -50,7 +44,7 @@ interface LoginInterface {
   extraLoginOptions: any;
 }
 
-export const useMultiChainStore = (): MultiChainState => {
+export const useXRPL = (): MultiChainState => {
   const {
     isConnected,
     provider,
