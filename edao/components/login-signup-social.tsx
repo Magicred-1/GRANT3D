@@ -12,7 +12,7 @@ import { useXRPL } from './web3auth/XRPLProvider/useXRPL'
 
 export function LoginSignupSocial() {
   const [isLogin, setIsLogin] = useState(true)
-  const { loginEmailPasswordless, loginWithGoogle } = useXRPL()
+  const { loginEmailPasswordless } = useXRPL()
   const [email, setEmail] = useState('')
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
