@@ -8,9 +8,19 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BookOpen, Globe } from 'lucide-react'
+import { useXRPL } from './web3auth/XRPLProvider/useXRPL'
 
 export function LoginSignupSocial() {
-  const [, setIsLogin] = useState(true)
+  const [isLogin, setIsLogin] = useState(true)
+  const { loginEmailPasswordless, loginWithGoogle } = useXRPL()
+  const [email, setEmail] = useState('')
+
+  const handleLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (isLogin) {
+      await loginEmailPasswordless(email)
+    }
+  }
 
   const SocialButton = ({ children, onClick, className } : { children: React.ReactNode, onClick: () => void, className?: string }) => (
     <Button 
@@ -47,10 +57,17 @@ export function LoginSignupSocial() {
               <TabsTrigger value="signup" onClick={() => setIsLogin(false)}>Sign Up</TabsTrigger>
             </TabsList>
             <TabsContent value="login">
-              <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+              <form onSubmit={handleLoginSubmit} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="m@example.com" required />
+                  <Input 
+                    id="email" 
+                    type="email" 
+                    placeholder="m@example.com" 
+                    required 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                  />
                 </div>
                 <Button type="submit" className="w-full">
                   Login with Email

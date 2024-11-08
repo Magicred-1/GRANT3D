@@ -66,7 +66,7 @@ const authAdapter = new AuthAdapter({
       defaultLanguage: "en", // en, de, ja, ko, zh, es, fr, pt, nl, tr
       mode: "auto", // whether to enable dark mode. defaultValue: auto
       theme: {
-        primary: "#00D1B2",
+        primary: "#7f56d9",
       } as WHITE_LABEL_THEME,
       useLogoLoader: true,
     } as WhiteLabelData,

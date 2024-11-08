@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Lexend } from "next/font/google";
 import "./globals.css";
 import MainProvider from "@/components/web3auth/MainProvider";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+// Import Lexend font from Google Fonts
+const lexend = Lexend({
+  subsets: ["latin"],
+  variable: "--font-lexend",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -26,13 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <MainProvider>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+      <body
+        className={`${lexend.className} antialiased`}
+      >
+        <MainProvider>
           {children}
-        </body>
-      </MainProvider>
+        </MainProvider>
+      </body>
     </html>
   );
 }
