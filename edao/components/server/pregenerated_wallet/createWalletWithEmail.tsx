@@ -1,6 +1,6 @@
 "use server";
 
-const createWalletWithEmail = async (email: string) => {
+export const createWalletWithEmail = async (email: string) => {
     try {
         // Construct the URL with the specified parameters
         const url = `https://lookup.web3auth.io/lookup?verifier=edao-social-login&verifierId=${encodeURIComponent(email)}&web3AuthNetwork=sapphire_devnet&clientId=BEHBx80k-JYOdHLtRlv_M7jqtjQt1ttpBm8w5S9F0oZQnquwpd4Il_zXFYgToNzz9uJ7XVBa7SVfAjj1PA1A4m8&`;
