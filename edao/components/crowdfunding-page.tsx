@@ -161,17 +161,6 @@ export default function ModernCrowdfundingPage() {
                     {campaign.votes}
                   </div>
                 </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="absolute top-2 right-10 p-0 w-8 h-8"
-                  onClick={() => handleVote(campaign.id, -1)}
-                  aria-label="Vote down"
-                >
-                  <div className="flex items-center justify-center h-full w-full gap-1">
-                    <Heart className="h-4 w-4 text-red-500" />
-                  </div>
-                </Button>
               </CardHeader>
               <CardContent className="p-6">
                 <div className="flex justify-between items-start mb-2">
