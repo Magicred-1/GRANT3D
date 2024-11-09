@@ -7,7 +7,7 @@ import { Web3AuthContextConfig } from "@web3auth/no-modal-react-hooks";
 const clientId = process.env.NEXT_PUBLIC_CLIENT_ID_WEB3AUTH ?? 'BEHBx80k-JYOdHLtRlv_M7jqtjQt1ttpBm8w5S9F0oZQnquwpd4Il_zXFYgToNzz9uJ7XVBa7SVfAjj1PA1A4m8';
 
 const chainConfig = {
-    chainNamespace: CHAIN_NAMESPACES.OTHER,
+    chainNamespace: CHAIN_NAMESPACES.XRPL,
     chainId: "0x2",
     // Avoid using public rpcTarget & wsTarget in production.
     // Use services like Infura, Quicknode etc
