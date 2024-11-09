@@ -14,7 +14,7 @@ export const QRCodeDialog: React.FC<QRCodeDialogProps> = ({ isOpen, onClose, wal
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>XRPL Deposit QR Code</DialogTitle>
+          <DialogTitle>XRP Deposit QR Code</DialogTitle>
           <DialogDescription>
             Scan the QR code to deposit to this wallet address.
           </DialogDescription>
