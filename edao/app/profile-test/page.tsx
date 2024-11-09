@@ -4,9 +4,9 @@ import Header from "@/components/Header";
 // import UserProfile from "@/hooks/user-profile";
 import Image from "next/image";
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { CardContent, CardFooter } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { TrendingUp, Clock, Users, DollarSign, Heart, ThumbsUp, PiggyBank, Save, Car, Video } from "lucide-react"
+import {  Clock, Users, DollarSign, Heart } from "lucide-react"
 
 const ProfileTestPage = () => {
     return (
