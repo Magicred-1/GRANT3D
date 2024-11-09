@@ -52,41 +52,6 @@ export default function UserProfile() {
       const userAccount = await getAccounts()
       console.table(userAccount)
 
-    //   {
-    //     "account_data": {
-    //         "Account": "rGNwLLf9vf4dQyq6QuuP1gbwqK4iQmPsBc",
-    //         "Balance": "15000000",
-    //         "Flags": 0,
-    //         "LedgerEntryType": "AccountRoot",
-    //         "OwnerCount": 0,
-    //         "PreviousTxnID": "5EE4C7D1FFAAD964674E7C3DB74D50910D90F0EAC3C97B50752AB9B067842B99",
-    //         "PreviousTxnLgrSeq": 2172141,
-    //         "Sequence": 2172141,
-    //         "index": "D04521ACFC1AF12AE9616C656C6FE25C914BBB695BF60DAC4F4E5F6BC33DC628"
-    //     },
-    //     "account_flags": {
-    //         "allowTrustLineClawback": false,
-    //         "defaultRipple": false,
-    //         "depositAuth": false,
-    //         "disableMasterKey": false,
-    //         "disallowIncomingCheck": false,
-    //         "disallowIncomingNFTokenOffer": false,
-    //         "disallowIncomingPayChan": false,
-    //         "disallowIncomingTrustline": false,
-    //         "disallowIncomingXRP": false,
-    //         "globalFreeze": false,
-    //         "noFreeze": false,
-    //         "passwordSpent": false,
-    //         "requireAuthorization": false,
-    //         "requireDestinationTag": false
-    //     },
-    //     "ledger_current_index": 2172264,
-    //     "queue_data": {
-    //         "txn_count": 0
-    //     },
-    //     "status": "success",
-    //     "validated": false
-    // }
       setWalletAddress(userAccount.account_data.Account)
       setWalletBalance(userAccount.account_data.Balance)
     }
@@ -189,35 +154,46 @@ export default function UserProfile() {
                     <p className="text-sm text-gray-600">{editedUser.bio || userData.bio}</p>
                   )}
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                    <div className="flex items-center">
-                      <Wallet className="w-4 h-4 mr-2 text-gray-500" />
-                      <span className="font-medium">Wallet</span>
-                    </div>
-                    <Wallet className="w-8 h-8 text-primary mb-2" />
-                    <p className="text-2xl font-bold">{shortenAddress(walletAddress || "")}</p>
-                    <div className="flex items-center space-x-2">
-                      <Button variant="outline" size="sm" onClick={openQRCodeDialog}>
-                        <QrCode className="w-4 h-4" />
-                        Show QR Code
-                      </Button>
-                      {isQRCodeOpen && (
-                        <QRCodeDialog
-                          walletAddress={walletAddress || ""}
-                          isOpen={isQRCodeOpen}
-                          onClose={closeQRCodeDialog}
-                        />
-                      )}
-                      {/* Balance of wallet */}
-                      {
-                        userInformations && walletBalance && (
-                          <p className="text-sm text-gray-600">Balance: {dropsToXrp(walletBalance)} XRP</p>
-                        )
-                      }
-                    </div>
+                <div className="flex flex-col items-center p-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                  <div className="flex items-center mb-3 space-x-2">
+                    <Wallet className="w-6 h-6 text-white" />
+                    <span className="font-semibold text-lg text-black">Wallet Information</span>
                   </div>
+
+                  <div className="flex flex-col items-center text-center">
+                    <p className="text-sm text-black">Address:</p>
+                    <p className="text-xl font-bold tracking-wider mb-4">{shortenAddress(walletAddress || "Not Connected")}</p>
+                  </div>
+
+                  <div className="flex items-center justify-center space-x-4">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={openQRCodeDialog} 
+                      className="bg-white text-gray-700 hover:bg-gray-200 transition rounded-full"
+                    >
+                      <QrCode className="w-4 h-4 mr-1" />
+                      Show QR Code
+                    </Button>
+
+                    {isQRCodeOpen && (
+                      <QRCodeDialog
+                        walletAddress={walletAddress || ""}
+                        isOpen={isQRCodeOpen}
+                        onClose={closeQRCodeDialog}
+                      />
+                    )}
+                  </div>
+
+                  {userInformations && walletBalance && (
+                    <div className="mt-4 text-center">
+                      <p className="text-lg font-semibold">Balance:</p>
+                      <p className="text-2xl font-bold text-yellow-300">{dropsToXrp(walletBalance)} XRP</p>
+                    </div>
+                  )}
                 </div>
+
+
               </CardContent>
             </Card>
           </div>
