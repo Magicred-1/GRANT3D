@@ -9,7 +9,7 @@ import { Web3AuthContextConfig } from "@web3auth/no-modal-react-hooks";
 const clientId = process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID || "BEHBx80k-JYOdHLtRlv_M7jqtjQt1ttpBm8w5S9F0oZQnquwpd4Il_zXFYgToNzz9uJ7XVBa7SVfAjj1PA1A4m8";
 
 const chainConfig = {
-    chainNamespace: CHAIN_NAMESPACES.OTHER,
+    chainNamespace: CHAIN_NAMESPACES.XRPL,
     chainId: "0x2",
     rpcTarget: "https://testnet-ripple-node.tor.us",
     wsTarget: "wss://s.altnet.rippletest.net",
@@ -43,16 +43,15 @@ const authAdapter = new AuthAdapter({
     loginConfig: {
       email_passwordless: {
         verifier: "edao-social-login", // Pass your verifier name
-        verifierSubIdentifier: "email",
         typeOfLogin: "email_passwordless",
         clientId, // Pass the Web3Auth `Client ID` here.
       },
-      google: {
-        verifier: "edao-social-login", // Pass your verifier name
-        verifierSubIdentifier: "google",
-        typeOfLogin: "google",
-        clientId: "901888887461-q5ngnuojmvd8vbpol2v3g8id39mb13v6.apps.googleusercontent.com", // Pass the Google `Client ID` here.
-      },
+      // google: {
+      //   verifier: "edao-social-login", // Pass your verifier name
+      //   verifierSubIdentifier: "google",
+      //   typeOfLogin: "google",
+      //   clientId: "901888887461-q5ngnuojmvd8vbpol2v3g8id39mb13v6.apps.googleusercontent.com", // Pass the Google `Client ID` here.
+      // },
     //   jwt: {
     //     verifier: "edao-social-login", // Pass the Verifier name here
     //     typeOfLogin: "jwt", // Pass on the login provider of the verifier you've created
