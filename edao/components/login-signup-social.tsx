@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -9,11 +9,21 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BookOpen, Globe } from 'lucide-react'
 import { useXRPL } from './web3auth/XRPLProvider/useXRPL'
+import { useRouter } from 'next/navigation'
 
 export function LoginSignupSocial() {
   const [isLogin, setIsLogin] = useState(true)
-  const { loginEmailPasswordless } = useXRPL()
+  const { loginEmailPasswordless, isConnected } = useXRPL()
   const [email, setEmail] = useState('')
+  
+  const router = useRouter()
+
+  useEffect(() => {
+    if (isConnected) {
+      router.push('/campaigns')
+    }
+  }
+  , [isConnected])
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
