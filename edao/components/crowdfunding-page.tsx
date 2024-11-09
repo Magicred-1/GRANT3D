@@ -1,22 +1,41 @@
 'use client'
 
 import { useState } from 'react'
+import Confetti from 'react-confetti'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { TrendingUp, Clock, Users, DollarSign, Heart } from "lucide-react"
+import { TrendingUp, Clock, Users, DollarSign, Heart, ThumbsUp, PiggyBank, Save } from "lucide-react"
 import Header from './Header'
+import useWindowSize from 'react-use/lib/useWindowSize'
 
 // Mock data for crowdfunding campaigns
-const campaigns = [
-  { id: 1, title: "Eco-Friendly Water Bottle", description: "Reduce plastic waste with our innovative design", goal: 50000, raised: 32500, backers: 650, daysLeft: 15, image: "/placeholder.svg?height=200&width=400" },
-  { id: 2, title: "Educational App for Kids", description: "Making learning fun and interactive for children", goal: 75000, raised: 45000, backers: 890, daysLeft: 22, image: "/placeholder.svg?height=200&width=400" },
-  { id: 3, title: "Community Garden Project", description: "Creating green spaces in urban areas", goal: 30000, raised: 28500, backers: 420, daysLeft: 5, image: "/placeholder.svg?height=200&width=400" },
-  { id: 4, title: "Renewable Energy Startup", description: "Developing affordable solar solutions", goal: 100000, raised: 75000, backers: 1200, daysLeft: 30, image: "/placeholder.svg?height=200&width=400" },
-  { id: 5, title: "Indie Film Production", description: "Supporting local artists and storytellers", goal: 60000, raised: 18000, backers: 300, daysLeft: 45, image: "/placeholder.svg?height=200&width=400" },
+const initialCampaigns = [
+  { id: 1, title: "Eco-Friendly Water Bottle", description: "Reduce plastic waste with our innovative design", goal: 50000, raised: 32500, backers: 650, daysLeft: 15, image: "/placeholder.svg?height=200&width=400", votes: 0 },
+  { id: 2, title: "Educational App for Kids", description: "Making learning fun and interactive for children", goal: 75000, raised: 45000, backers: 890, daysLeft: 22, image: "/placeholder.svg?height=200&width=400", votes: 0 },
+  { id: 3, title: "Community Garden Project", description: "Creating green spaces in urban areas", goal: 30000, raised: 28500, backers: 420, daysLeft: 5, image: "/placeholder.svg?height=200&width=400", votes: 0 },
+  { id: 4, title: "Renewable Energy Startup", description: "Developing affordable solar solutions", goal: 100000, raised: 75000, backers: 1200, daysLeft: 30, image: "/placeholder.svg?height=200&width=400", votes: 0 },
+  { id: 5, title: "Indie Film Production", description: "Supporting local artists and storytellers", goal: 60000, raised: 18000, backers: 300, daysLeft: 45, image: "/placeholder.svg?height=200&width=400", votes: 0 },
 ]
 
 export default function ModernCrowdfundingPage() {
+  const [campaigns, setCampaigns] = useState(initialCampaigns)
+  const [showConfetti, setShowConfetti] = useState(false)
+  const { width, height } = useWindowSize()
+
+  const handleVote = (id: number, increment: number) => {
+    setCampaigns(prevCampaigns =>
+      prevCampaigns.map(campaign =>
+        campaign.id === id ? { ...campaign, votes: campaign.votes + increment } : campaign
+      )
+    )
+
+    // Trigger confetti on upvote
+    if (increment > 0) {
+      setShowConfetti(true)
+      setTimeout(() => setShowConfetti(false), 1500) // Hide confetti after 1.5 seconds
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -28,6 +47,7 @@ export default function ModernCrowdfundingPage() {
           --secondary-foreground: 0 0% 100%;
         }
       `}</style>
+
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-8">
@@ -38,13 +58,29 @@ export default function ModernCrowdfundingPage() {
           </Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {campaigns.map((campaign) => (
-            <Card key={campaign.id} className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+        {campaigns.map((campaign) => (
+            <Card key={campaign.id} className="relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
               <CardHeader className="p-0">
                 <img src={campaign.image} alt={campaign.title} className="w-full h-48 object-cover" />
+                {/* Upvote Button positioned at the top-right */}
+                {showConfetti && <Confetti width={width} height={height} numberOfPieces={100}/>}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="absolute top-2 right-2 p-0 w-8 h-8"
+                  onClick={() => handleVote(campaign.id, 1)}
+                  aria-label="Vote up"
+                >
+                  <div className="flex items-center justify-center h-full w-full gap-1">
+                    <ThumbsUp className="h-4 w-4 text-green-500" />
+                    {campaign.votes}
+                  </div>
+                </Button>
               </CardHeader>
               <CardContent className="p-6">
-                <CardTitle className="text-xl mb-2">{campaign.title}</CardTitle>
+                <div className="flex justify-between items-start mb-2">
+                  <CardTitle className="text-xl">{campaign.title}</CardTitle>
+                </div>
                 <CardDescription className="mb-4">{campaign.description}</CardDescription>
                 <Progress value={(campaign.raised / campaign.goal) * 100} className="h-2 mb-4" />
                 <div className="grid grid-cols-2 gap-4 text-sm">
@@ -73,10 +109,10 @@ export default function ModernCrowdfundingPage() {
               <CardFooter className="flex justify-between p-6 pt-0">
                 <Button variant="outline" className="w-full mr-2">
                   <Heart className="mr-2 h-4 w-4" />
-                  Save
+                  Like
                 </Button>
                 <Button className="w-full ml-2 bg-secondary hover:bg-secondary/90">
-                  Back Project
+                  <PiggyBank />Fund Campaign
                 </Button>
               </CardFooter>
             </Card>

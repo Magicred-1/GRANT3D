@@ -13,8 +13,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import { DollarSign, Users, Clock, Heart, Share2, Facebook, Twitter, Linkedin, Mail, User, MapPin, Calendar, Award } from "lucide-react"
+import { DollarSign, Users, Clock, Heart, Share2, Facebook, Twitter, Linkedin, Mail, User, MapPin, Calendar, Award, LucideVerified } from "lucide-react"
 import Header from './Header'
+import { ShareDialog } from './dialogs/ShareDialog'
+import { useRouter } from 'next/navigation'
 
 // Mock data for the campaign
 const campaign = {
@@ -33,6 +35,7 @@ const campaign = {
     "/placeholder.svg?height=400&width=800&text=Product+Image+4",
   ],
   author: {
+    id: 1,
     name: "Sarah Green",
     avatar: "/placeholder.svg?height=100&width=100",
     location: "San Francisco, CA",
@@ -60,6 +63,13 @@ const campaign = {
 
 export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
   const [isLiked, setIsLiked] = useState(false)
+  const [isShareDialogOpen, setIsShareDialogOpen] = useState(false)
+
+  const router = useRouter()
+
+  const handleShareLink = () => {
+    setIsShareDialogOpen(true)
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -155,10 +165,10 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
                     <Heart className={`mr-2 h-4 w-4 ${isLiked ? 'fill-red-500 text-red-500' : ''}`} />
                     {isLiked ? 'Liked' : 'Like'}
                   </Button>
-                  <Button variant="outline">
-                    <Share2 className="mr-2 h-4 w-4" />
-                    Share
-                  </Button>
+                  <div>
+                    <Button onClick={() => setIsShareDialogOpen(true)}>Share</Button>
+                    <ShareDialog id={campaign.id} open={isShareDialogOpen} onClose={() => setIsShareDialogOpen(false)} />
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -174,7 +184,10 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
                     <AvatarFallback>{campaign.author.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-semibold">{campaign.author.name}</p>
+                    <div className="flex items-center gap-1">
+                      <p className="font-semibold">{campaign.author.name}</p>
+                      <LucideVerified className='text-blue-500'/>
+                    </div>
                     <p className="text-sm text-gray-500 flex items-center">
                       <MapPin className="mr-1 h-4 w-4" />
                       {campaign.author.location}
@@ -193,24 +206,31 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button variant="outline" className="w-full">Contact Creator</Button>
+                <Button variant="outline" className="w-full"
+                   onClick={() => {
+                    router.push(`/profile/${campaign.author.id}`)
+                  }
+                  }
+                >View Profile</Button>
               </CardFooter>
             </Card>
 
-            {/* School Details */}
-            <Card>
+            {/* Enhanced School Details Section */}
+            <Card className="bg-blue-50 dark:bg-blue-900 border border-blue-300 dark:border-blue-700 mb-6 shadow-md rounded-lg">
               <CardHeader>
-                <CardTitle>School Details</CardTitle>
+                <CardTitle className="text-blue-700 dark:text-blue-300 text-lg">School Details</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-sm">
-                  <p className="font-semibold mb-2">School Name:</p>
-                  <p>{campaign.school.name}</p>
-                  <p className="font-semibold mb-2 mt-4">Location:</p>
-                  <p>{campaign.school.location}, {campaign.school.country}</p>
-                  <p className="font-semibold mb-2 mt-4">School Admin:</p>
-                  <p>{campaign.school.admin.name}</p>
-                  <p className="text-gray-500">{campaign.school.admin.email}</p>
+                  <p className="font-semibold text-gray-800 dark:text-gray-100 mb-1">School Name:</p>
+                  <p className="text-blue-900 dark:text-blue-200">{campaign.school.name}</p>
+                  
+                  <p className="font-semibold text-gray-800 dark:text-gray-100 mt-4 mb-1">Location:</p>
+                  <p className="text-blue-900 dark:text-blue-200">{campaign.school.location}, {campaign.school.country}</p>
+                  
+                  <p className="font-semibold text-gray-800 dark:text-gray-100 mt-4 mb-1">School Admin:</p>
+                  <p className="text-blue-900 dark:text-blue-200">{campaign.school.admin.name}</p>
+                  <p className="text-blue-700 dark:text-blue-400">{campaign.school.admin.email}</p>
                 </div>
               </CardContent>
             </Card>

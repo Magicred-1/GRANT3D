@@ -4,8 +4,11 @@ import { Search, User, Settings, LogOut } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+
+    const router = useRouter()
 
     const [user, setUser] = useState({
         name: "Jane Doe",
@@ -45,13 +48,14 @@ const Header = () => {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      router.push('/profile')
+                    }
+                    }
+                  >
                     <User className="mr-2 h-4 w-4" />
                     <span>Profile</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut}>
