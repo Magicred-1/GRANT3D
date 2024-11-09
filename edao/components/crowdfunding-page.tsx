@@ -5,17 +5,88 @@ import Confetti from 'react-confetti'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { TrendingUp, Clock, Users, DollarSign, Heart, ThumbsUp, PiggyBank, Save } from "lucide-react"
+import { TrendingUp, Clock, Users, DollarSign, Heart, ThumbsUp, PiggyBank, Save, Car } from "lucide-react"
 import Header from './Header'
 import useWindowSize from 'react-use/lib/useWindowSize'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel'
 
 // Mock data for crowdfunding campaigns
 const initialCampaigns = [
-  { id: 1, title: "Eco-Friendly Water Bottle", description: "Reduce plastic waste with our innovative design", goal: 50000, raised: 32500, backers: 650, daysLeft: 15, image: "/placeholder.svg?height=200&width=400", votes: 0 },
-  { id: 2, title: "Educational App for Kids", description: "Making learning fun and interactive for children", goal: 75000, raised: 45000, backers: 890, daysLeft: 22, image: "/placeholder.svg?height=200&width=400", votes: 0 },
-  { id: 3, title: "Community Garden Project", description: "Creating green spaces in urban areas", goal: 30000, raised: 28500, backers: 420, daysLeft: 5, image: "/placeholder.svg?height=200&width=400", votes: 0 },
-  { id: 4, title: "Renewable Energy Startup", description: "Developing affordable solar solutions", goal: 100000, raised: 75000, backers: 1200, daysLeft: 30, image: "/placeholder.svg?height=200&width=400", votes: 0 },
-  { id: 5, title: "Indie Film Production", description: "Supporting local artists and storytellers", goal: 60000, raised: 18000, backers: 300, daysLeft: 45, image: "/placeholder.svg?height=200&width=400", votes: 0 },
+  { 
+    id: 1, 
+    title: "Eco-Friendly Water Bottle", 
+    description: "Reduce plastic waste with our innovative design", 
+    goal: 50000, 
+    raised: 32500, 
+    backers: 650, 
+    daysLeft: 15, 
+    images: [
+      "/placeholder.svg?height=200&width=400",
+      "/placeholder.svg?height=200&width=400&text=Image+2",
+      "/placeholder.svg?height=200&width=400&text=Image+3"
+    ], 
+    votes: 0 
+  },
+  { 
+    id: 2, 
+    title: "Educational App for Kids", 
+    description: "Making learning fun and interactive for children", 
+    goal: 75000, 
+    raised: 45000, 
+    backers: 890, 
+    daysLeft: 22, 
+    images: [
+      "/placeholder.svg?height=200&width=400",
+      "/placeholder.svg?height=200&width=400&text=Image+2",
+      "/placeholder.svg?height=200&width=400&text=Image+3"
+    ], 
+    votes: 0 
+  },
+  { 
+    id: 3, 
+    title: "Community Garden Project", 
+    description: "Creating green spaces in urban areas", 
+    goal: 30000, 
+    raised: 28500, 
+    backers: 420, 
+    daysLeft: 5, 
+    images: [
+      "/placeholder.svg?height=200&width=400",
+      "/placeholder.svg?height=200&width=400&text=Image+2",
+      "/placeholder.svg?height=200&width=400&text=Image+3"
+    ], 
+    votes: 0 
+  },
+  { 
+    id: 4, 
+    title: "Renewable Energy Startup", 
+    description: "Developing affordable solar solutions", 
+    goal: 100000, 
+    raised: 75000, 
+    backers: 1200, 
+    daysLeft: 30, 
+    images: [
+      "/placeholder.svg?height=200&width=400",
+      "/placeholder.svg?height=200&width=400&text=Image+2",
+      "/placeholder.svg?height=200&width=400&text=Image+3"
+    ], 
+    votes: 0 
+  },
+  { 
+    id: 5, 
+    title: "Indie Film Production", 
+    description: "Supporting local artists and storytellers", 
+    goal: 60000, 
+    raised: 18000, 
+    backers: 300, 
+    daysLeft: 45, 
+    images: [
+      "/placeholder.svg?height=200&width=400",
+      "/placeholder.svg?height=200&width=400&text=Image+2",
+      "/placeholder.svg?height=200&width=400&text=Image+3"
+    ], 
+    votes: 0 
+  },
 ]
 
 export default function ModernCrowdfundingPage() {
@@ -61,7 +132,19 @@ export default function ModernCrowdfundingPage() {
         {campaigns.map((campaign) => (
             <Card key={campaign.id} className="relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
               <CardHeader className="p-0">
-                <img src={campaign.image} alt={campaign.title} className="w-full h-48 object-cover" />
+                <Carousel className="w-full">
+                  <CarouselContent>
+                    {campaign.images.map((image, index) => (
+                      <CarouselItem key={index}>
+                        <div className="p-1">
+                          <img src={image} alt={`${campaign.title} - Image ${index + 1}`} className="w-full h-[400px] object-cover rounded-lg" />
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
                 {/* Upvote Button positioned at the top-right */}
                 {showConfetti && <Confetti width={width} height={height} numberOfPieces={100}/>}
                 <Button
@@ -74,6 +157,17 @@ export default function ModernCrowdfundingPage() {
                   <div className="flex items-center justify-center h-full w-full gap-1">
                     <ThumbsUp className="h-4 w-4 text-green-500" />
                     {campaign.votes}
+                  </div>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="absolute top-2 right-10 p-0 w-8 h-8"
+                  onClick={() => handleVote(campaign.id, -1)}
+                  aria-label="Vote down"
+                >
+                  <div className="flex items-center justify-center h-full w-full gap-1">
+                    <Heart className="h-4 w-4 text-red-500" />
                   </div>
                 </Button>
               </CardHeader>
@@ -106,15 +200,6 @@ export default function ModernCrowdfundingPage() {
                   </div>
                 </div>
               </CardContent>
-              <CardFooter className="flex justify-between p-6 pt-0">
-                <Button variant="outline" className="w-full mr-2">
-                  <Heart className="mr-2 h-4 w-4" />
-                  Like
-                </Button>
-                <Button className="w-full ml-2 bg-secondary hover:bg-secondary/90">
-                  <PiggyBank />Fund Campaign
-                </Button>
-              </CardFooter>
             </Card>
           ))}
         </div>

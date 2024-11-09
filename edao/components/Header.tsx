@@ -1,6 +1,6 @@
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from "./ui/dropdown-menu";
-import { Search, User, Settings, LogOut } from "lucide-react";
+import { Search, User, Settings, LogOut, PiggyBank } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useState } from "react";
@@ -28,8 +28,12 @@ const Header = () => {
             <h1 className="text-2xl font-bold text-primary">eDAOcation</h1>
             <div className="flex items-center space-x-4">
               <div className="relative">
-                <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-                <Input type="search" placeholder="Search campaigns" className="pl-8 w-64" />
+                {/* <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                <Input type="search" placeholder="Search campaigns" className="pl-8 w-64" /> */}
+                <Button variant="default">
+                  <PiggyBank className="h-6 w-6" />
+                  Fund DAO
+                </Button>
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
