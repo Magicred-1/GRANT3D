@@ -1,51 +1,44 @@
-"use server";
-
-import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
+import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method === "POST") {
-    try {
-      const {
+export async function POST(request: Request) {
+  try {
+    // Parse the request body as JSON
+    const {
+      title,
+      description,
+      goal,
+      deadline,
+      educationalInstitution,
+      courseOfStudy,
+      diploma,
+      experience,
+      fundingType,
+      ipfsImages,
+    } = await request.json();
+
+    // Create a new campaign record in the database
+    const newCampaign = await prisma.campaign.create({
+      data: {
         title,
         description,
-        goal,
-        deadline,
+        goal: parseFloat(goal),
+        deadline: new Date(deadline),
         educationalInstitution,
         courseOfStudy,
         diploma,
         experience,
         fundingType,
         ipfsImages,
-      } = req.body;
+      },
+    });
 
-      const newCampaign = await prisma.campaign.create({
-        data: {
-          title,
-          description,
-          goal: parseFloat(goal),
-          deadline: new Date(deadline),
-          educationalInstitution,
-          courseOfStudy,
-          diploma,
-          experience,
-          fundingType,
-          ipfsImages,
-        },
-      });
-
-      res.status(201).json(newCampaign);
-    } catch (error) {
-      console.error("Error creating campaign:", error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  } else {
-    res.setHeader("Allow", ["POST"]);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    // Return the newly created campaign in the response
+    return NextResponse.json({ data: newCampaign });
+  } catch (error) {
+    console.error("Error creating campaign:", error);
+    return NextResponse.json({ error: "Failed to create campaign" }, { status: 500 });
   }
 }
