@@ -10,6 +10,8 @@ export default {
   theme: {
   	extend: {
   		colors: {
+			viovio: '#D0C1F0',
+			vioviologo: "#7F56D9",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
