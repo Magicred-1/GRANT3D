@@ -18,7 +18,7 @@ const initialCampaigns = [
     description: "Reduce plastic waste with our innovative design", 
     goal: 50000, 
     raised: 32500, 
-    backers: 650, 
+    backers: 650,
     daysLeft: 15, 
     images: [
       "/placeholder.svg?height=200&width=400",
