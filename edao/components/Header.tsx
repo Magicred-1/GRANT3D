@@ -10,7 +10,7 @@ import { useXRPL } from "./web3auth/XRPLProvider/useXRPL";
 
 const Header = () => {
     const router = useRouter();
-    const { isConnected, getUserInfo } = useXRPL();
+    const { isConnected, getUserInfo, disconnect } = useXRPL();
     const [user, setUser] = useState(
         {
             name: "John Doe",
@@ -37,8 +37,8 @@ const Header = () => {
     }, [isConnected]);
 
     const handleSignOut = () => {
-        // Implement sign out logic here
-        console.log("User signed out");
+        disconnect();
+        router.push("/");
     };
 
     return (

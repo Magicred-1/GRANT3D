@@ -59,9 +59,9 @@ const authAdapter = new AuthAdapter({
       },
     },
     whiteLabel: {
-      appName: "eDAOcation",
+      appName: "GRANT3D",
       appUrl: "https://xxxxxxx.com",
-      logoLight: "https://web3auth.io/images/web3auth-logo.svg",
+      logoLight: "https://app.grant3d.xyz/_next/image?url=%2Fgrant3d_logo.png&w=384&q=75",
       defaultLanguage: "en", // en, de, ja, ko, zh, es, fr, pt, nl, tr
       mode: "auto", // whether to enable dark mode. defaultValue: auto
       theme: {

@@ -36,15 +36,20 @@ export default function UserProfile() {
   const [editedUser, setEditedUser] = useState(userData)
   const [walletAddress, setWalletAddress] = useState<string | null>(null)
   const [isQRCodeOpen, setIsQRCodeOpen] = useState(false)
-  const [userInformations, setUserInformations] = useState(null)
+  interface UserInfo {
+    balance: string;
+    // Add other properties if needed
+  }
+
+  const [userInformations, setUserInformations] = useState<UserInfo | null>(null)
 
   const { getAccounts, getUserInfo } = useXRPL()
 
   useEffect(() => {
     const fetchWalletAddress = async () => {
       const address = await getAccounts()
-      console.log(address)
-      setWalletAddress(address.account)
+      console.table(address)
+      setWalletAddress(address.Account)
     }
     fetchWalletAddress()
   }, [getAccounts])
@@ -165,6 +170,8 @@ export default function UserProfile() {
                           onClose={closeQRCodeDialog}
                         />
                       )}
+                      {/* Balance of wallet */}
+                      <p className="text-sm text-gray-600">Balance: {userInformations?.balance}</p>
                     </div>
                   </div>
                 </div>
