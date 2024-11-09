@@ -10,12 +10,12 @@ export async function POST(request: Request) {
       description,
       goal,
       deadline,
-      educationalInstitution,
-      courseOfStudy,
-      diploma,
-      experience,
-      fundingType,
-      ipfsImages,
+      // educationalInstitution,
+      // courseOfStudy,
+      // diploma,
+      // experience,
+      // fundingType,
+      // ipfsImages,
     } = await request.json();
 
     // Validate required fields
