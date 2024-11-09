@@ -18,7 +18,7 @@ model Campaign {
   id                      String   @id @default(auto()) @map("_id") @db.ObjectId
   title                   String
   description             String
-  goal                    Float
+  goal                    String
   deadline                DateTime
   educationalInstitution  String
   courseOfStudy           String

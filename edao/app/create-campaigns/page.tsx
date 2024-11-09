@@ -92,7 +92,17 @@ export default function CampaignCreation() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/campaigns/create", {
+      const ipfsUrls = await Promise.all(
+        images.map(async (image) => {
+          const url = await pinFileToIPFS(image.file);
+          return url;
+        })
+      );
+      setFormData((prevData: any) => ({
+        ...prevData,
+        ipfsImages: ipfsUrls,
+      }));
+      const response = await fetch("/api/campaigns", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
