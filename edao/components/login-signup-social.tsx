@@ -16,8 +16,20 @@ export function LoginSignupSocial() {
   const [isLogin, setIsLogin] = useState(true)
   const { loginEmailPasswordless, isConnected } = useXRPL()
   const [email, setEmail] = useState('')
-  
+  const [activeTab, setActiveTab] = useState('login') // State to track active tab
   const router = useRouter()
+
+    // Sync with URL hash on component mount
+    useEffect(() => {
+      const currentHash = window.location.hash.substring(1)
+      if (currentHash === 'signup') setActiveTab('signup')
+      else setActiveTab('login')
+    }, [])
+  
+    // Update URL when the tab changes
+    useEffect(() => {
+      window.location.hash = activeTab
+    }, [activeTab])
 
   useEffect(() => {
     if (isConnected) {
