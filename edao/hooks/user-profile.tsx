@@ -12,14 +12,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Header from '@/components/Header'
 import { QRCodeDialog } from '@/components/dialogs/WalletDialog'
 
-// Mock user data
 const userData = {
   name: "Alice Johnson",
-  email: "alice@example.com",
+  email: "djasongadiou@gmail.com",
   avatar: "/placeholder.svg?height=128&width=128",
   location: "New York, NY",
   joinDate: "January 2022",
-  bio: "Passionate about technology and sustainability. Always looking for innovative projects to support.",
+  bio: "Passionate about technology and sustainability.",
   campaignsCreated: 3,
   campaignsBacked: 15,
   totalAmountBacked: 2500,
@@ -30,30 +29,38 @@ const userData = {
   ]
 }
 
+const shortenAddress = (address: string) => `${address.slice(0, 6)}...${address.slice(-4)}`
+
 export default function UserProfile() {
   const [isEditing, setIsEditing] = useState(false)
   const [editedUser, setEditedUser] = useState(userData)
   const [walletAddress, setWalletAddress] = useState<string | null>(null)
-  const [isQRCodeOpen, setIsQRCodeOpen] = useState(false) // State for opening QR code dialog
+  const [isQRCodeOpen, setIsQRCodeOpen] = useState(false)
+  const [userInformations, setUserInformations] = useState(null)
 
-  const { getAccounts } = useXRPL()
+  const { getAccounts, getUserInfo } = useXRPL()
 
   useEffect(() => {
     const fetchWalletAddress = async () => {
-      // Fetch the wallet address from the XRPL when component mounts
       const address = await getAccounts()
-      setWalletAddress(address)
+      console.log(address)
+      setWalletAddress(address.account)
     }
     fetchWalletAddress()
   }, [getAccounts])
 
-  const handleEdit = () => {
-    setIsEditing(true)
-  }
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const userInfo = await getUserInfo()
+      setUserInformations(userInfo)
+    }
+    fetchUserInfo()
+  }, [getUserInfo])
+
+  const handleEdit = () => setIsEditing(true)
 
   const handleSave = () => {
     setIsEditing(false)
-    // Here you would typically send the updated data to your backend
     console.log("Saving user data:", editedUser)
   }
 
@@ -61,7 +68,7 @@ export default function UserProfile() {
     setEditedUser({ ...editedUser, [e.target.name]: e.target.value })
   }
 
-  const openQRCodeDialog = () => setIsQRCodeOpen(true)
+  const openQRCodeDialog = () => walletAddress && setIsQRCodeOpen(true)
   const closeQRCodeDialog = () => setIsQRCodeOpen(false)
 
   return (
@@ -90,8 +97,8 @@ export default function UserProfile() {
               <CardContent>
                 <div className="flex flex-col items-center">
                   <Avatar className="w-32 h-32 mb-4">
-                    <AvatarImage src={editedUser.avatar} alt={editedUser.name} />
-                    <AvatarFallback>{editedUser.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                    <AvatarImage src={editedUser.avatar} alt={editedUser.name || userData.name} />
+                    <AvatarFallback>{(editedUser.name || userData.name).split(' ').map(n => n[0]).join('')}</AvatarFallback>
                   </Avatar>
                   {isEditing ? (
                     <Input
@@ -101,7 +108,7 @@ export default function UserProfile() {
                       className="text-center text-2xl font-bold mb-2"
                     />
                   ) : (
-                    <h2 className="text-2xl font-bold mb-2">{editedUser.name}</h2>
+                    <h2 className="text-2xl font-bold mb-2">{editedUser.name || userData.name}</h2>
                   )}
                   <div className="flex items-center text-sm text-gray-500 mb-4">
                     <MapPin className="w-4 h-4 mr-1" />
@@ -113,12 +120,12 @@ export default function UserProfile() {
                         className="text-center"
                       />
                     ) : (
-                      editedUser.location
+                      editedUser.location || userData.location
                     )}
                   </div>
                   <div className="flex items-center text-sm text-gray-500 mb-4">
                     <Calendar className="w-4 h-4 mr-1" />
-                    Joined {editedUser.joinDate}
+                    Joined {editedUser.joinDate || userData.joinDate}
                   </div>
                 </div>
                 <Separator className="my-4" />
@@ -135,13 +142,13 @@ export default function UserProfile() {
                       className="w-full"
                     />
                   ) : (
-                    <p className="text-sm text-gray-600">{editedUser.bio}</p>
+                    <p className="text-sm text-gray-600">{editedUser.bio || userData.bio}</p>
                   )}
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
                     <Wallet className="w-8 h-8 text-primary mb-2" />
-                    <p className="text-2xl font-bold">{walletAddress || "Not Set"}</p>
+                    <p className="text-2xl font-bold">{shortenAddress(walletAddress || "")}</p>
                     <div className="flex items-center space-x-2">
                       <Button variant="outline" size="sm" onClick={openQRCodeDialog}>
                         <QrCode className="w-4 h-4" />
@@ -172,7 +179,7 @@ export default function UserProfile() {
                     <CardTitle>Recent Activity</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {editedUser.recentActivity.map((activity, index) => (
+                    {(editedUser.recentActivity || userData.recentActivity).map((activity, index) => (
                       <div key={index} className="mb-4 last:mb-0">
                         <p className="font-semibold">
                           {activity.type === 'backed' ? 'Backed' : 'Created'} {activity.name}
@@ -194,19 +201,19 @@ export default function UserProfile() {
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                        <DollarSign className="w-8 h-8 text-primary mb-2" />
-                        <p className="text-2xl font-bold">${editedUser.totalAmountBacked}</p>
-                        <p className="text-sm text-gray-500">Total Backed</p>
-                      </div>
-                      <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
                         <Award className="w-8 h-8 text-primary mb-2" />
-                        <p className="text-2xl font-bold">{editedUser.campaignsCreated}</p>
-                        <p className="text-sm text-gray-500">Campaigns Created</p>
+                        <p className="text-2xl font-bold">{editedUser.campaignsCreated || userData.campaignsCreated}</p>
+                        <p className="text-sm text-gray-600">Campaigns Created</p>
                       </div>
                       <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
                         <User className="w-8 h-8 text-primary mb-2" />
-                        <p className="text-2xl font-bold">{editedUser.campaignsBacked}</p>
-                        <p className="text-sm text-gray-500">Campaigns Backed</p>
+                        <p className="text-2xl font-bold">{editedUser.campaignsBacked || userData.campaignsBacked}</p>
+                        <p className="text-sm text-gray-600">Campaigns Backed</p>
+                      </div>
+                      <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                        <DollarSign className="w-8 h-8 text-primary mb-2" />
+                        <p className="text-2xl font-bold">${editedUser.totalAmountBacked || userData.totalAmountBacked}</p>
+                        <p className="text-sm text-gray-600">Total Amount Backed</p>
                       </div>
                     </div>
                   </CardContent>
