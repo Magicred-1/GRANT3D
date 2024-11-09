@@ -147,6 +147,10 @@ export default function UserProfile() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                    <div className="flex items-center">
+                      <Wallet className="w-4 h-4 mr-2 text-gray-500" />
+                      <span className="font-medium">Wallet</span>
+                    </div>
                     <Wallet className="w-8 h-8 text-primary mb-2" />
                     <p className="text-2xl font-bold">{shortenAddress(walletAddress || "")}</p>
                     <div className="flex items-center space-x-2">

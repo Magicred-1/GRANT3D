@@ -9,12 +9,13 @@ import { TrendingUp, Clock, Users, DollarSign, Heart, ThumbsUp, PiggyBank, Save,
 import Header from './Header'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel'
+import { useRouter } from 'next/navigation'
 
 // Mock data for crowdfunding campaigns
 const initialCampaigns = [
   { 
     id: 1, 
-    title: "Eco-Friendly Water Bottle", 
+    title: "TUM Munich IT Curriculum",
     description: "Reduce plastic waste with our innovative design", 
     goal: 50000, 
     raised: 32500, 
@@ -29,7 +30,7 @@ const initialCampaigns = [
   },
   { 
     id: 2, 
-    title: "Educational App for Kids", 
+    title: "Paris Sorbonne Medecine Curriculum",
     description: "Making learning fun and interactive for children", 
     goal: 75000, 
     raised: 45000, 
@@ -44,26 +45,7 @@ const initialCampaigns = [
   },
   { 
     id: 3, 
-    title: "Community Garden Project", 
-    description: "Creating green spaces in urban areas", 
-    goal: 30000, 
-    raised: 28500, 
-    backers: 420, 
-    daysLeft: 5, 
-    images: [
-      "/placeholder.svg?height=200&width=400",
-      "/placeholder.svg?height=200&width=400&text=Image+2",
-      "/placeholder.svg?height=200&width=400&text=Image+3"
-    ], 
-    votes: 0 
-  },
-  { 
-    id: 4, 
-    title: "Renewable Energy Startup", 
-    description: "Developing affordable solar solutions", 
-    goal: 100000, 
-    raised: 75000, 
-    backers: 1200, 
+    title: "Going to Harvard",
     daysLeft: 30, 
     images: [
       "/placeholder.svg?height=200&width=400",
@@ -74,7 +56,7 @@ const initialCampaigns = [
   },
   { 
     id: 5, 
-    title: "Indie Film Production", 
+    title: "Local Art Exhibition",
     description: "Supporting local artists and storytellers", 
     goal: 60000, 
     raised: 18000, 
@@ -93,6 +75,7 @@ export default function ModernCrowdfundingPage() {
   const [campaigns, setCampaigns] = useState(initialCampaigns)
   const [showConfetti, setShowConfetti] = useState(false)
   const { width, height } = useWindowSize()
+  const router = useRouter()
 
   const handleVote = (id: number, increment: number) => {
     setCampaigns(prevCampaigns =>
@@ -132,7 +115,13 @@ export default function ModernCrowdfundingPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         
         {campaigns.map((campaign) => (
-            <Card key={campaign.id} className="relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+            <Card key={campaign.id} className="relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+              onClick={
+                () => {
+                  router.push(`/campaigns/${campaign.id}`);
+                }
+              }
+            >
               <CardHeader className="p-0">
                 <Carousel className="w-full">
                   <CarouselContent>
@@ -148,7 +137,6 @@ export default function ModernCrowdfundingPage() {
                 <CarouselNext />
               </Carousel>
                 {/* Upvote Button positioned at the top-right */}
-                
                 <Button
                   variant="outline"
                   size="sm"
@@ -167,11 +155,11 @@ export default function ModernCrowdfundingPage() {
                   <CardTitle className="text-xl">{campaign.title}</CardTitle>
                 </div>
                 <CardDescription className="mb-4">{campaign.description}</CardDescription>
-                <Progress value={(campaign.raised / campaign.goal) * 100} className="h-2 mb-4" />
+                <Progress value={((campaign.raised ?? 0) / (campaign.goal ?? 1)) * 100} className="h-2 mb-4" />
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div className="flex items-center">
                     <DollarSign className="mr-2 h-4 w-4 text-green-500" />
-                    <span className="font-medium">${campaign.raised.toLocaleString()}</span>
+                    <span className="font-medium">${(campaign.raised ?? 0).toLocaleString()}</span>
                     <span className="text-muted-foreground ml-1">raised</span>
                   </div>
                   <div className="flex items-center justify-end">
@@ -186,7 +174,7 @@ export default function ModernCrowdfundingPage() {
                   </div>
                   <div className="flex items-center justify-end">
                     <DollarSign className="mr-2 h-4 w-4 text-purple-500" />
-                    <span className="font-medium">${campaign.goal.toLocaleString()}</span>
+                    <span className="font-medium">${(campaign.goal ?? 0).toLocaleString()}</span>
                     <span className="text-muted-foreground ml-1">goal</span>
                   </div>
                 </div>
@@ -195,9 +183,6 @@ export default function ModernCrowdfundingPage() {
                 <Button variant="outline" className="w-full mr-2">
                   <Heart className="mr-2 h-4 w-4" />
                   Like
-                </Button>
-                <Button className="w-full ml-2 bg-secondary hover:bg-secondary/90">
-                  <PiggyBank />Support
                 </Button>
               </CardFooter>
             </Card>

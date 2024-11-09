@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Lexend } from "next/font/google";
 import "./globals.css";
 import MainProvider from "@/components/web3auth/MainProvider";
-import { XRPLClient } from '@nice-xrpl/react-xrpl';
 
 // Import Lexend font from Google Fonts
 const lexend = Lexend({
@@ -27,11 +26,9 @@ export default function RootLayout({
       <body
         className={`${lexend.className} antialiased`}
       >
-        {/* <XRPLClient> */}
           <MainProvider>
-            {children}
+              {children}
           </MainProvider>
-        {/* </XRPLClient> */}
       </body>
     </html>
   );

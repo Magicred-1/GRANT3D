@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/card";
 import pinFileToIPFS from "../../lib/pinFileToIpfs";
 import { ImagePlus, X } from "lucide-react";
+import Header from "@/components/Header";
 
 interface Image {
   file: File;
@@ -124,6 +125,8 @@ export default function CampaignCreation() {
   };
 
   return (
+    <>
+    <Header />
     <div className="container mx-auto p-4">
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
@@ -308,5 +311,6 @@ export default function CampaignCreation() {
         </CardFooter>
       </Card>
     </div>
+    </>
   );
 }
