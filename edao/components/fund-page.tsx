@@ -1,9 +1,11 @@
+
+
 'use client'
 
 import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ShieldCheck, Clock, AlertTriangle, PiggyBank, DollarSign } from "lucide-react"
+import { ShieldCheck, Clock, PiggyBank, DollarSign } from "lucide-react"
 import Header from './Header'
 
 // Sample XRP reserve data

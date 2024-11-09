@@ -19,18 +19,18 @@ const Header = () => {
         }
     );
 
-    // useEffect(() => {
-    //   if (!isConnected) {
-    //     router.push("/");
-    //   }
-    // }, [isConnected]);
+    useEffect(() => {
+      if (!isConnected) {
+        router.push("/");
+      }
+    }, [isConnected]);
 
     useEffect(() => {
       if (isConnected) {
         const fetchUserInfo = async () => {
           const userInfo = await getUserInfo();
           console.log(userInfo);
-          // setUser(userInfo);
+          setUser(userInfo);
         };
         fetchUserInfo();
       }

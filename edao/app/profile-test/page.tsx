@@ -1,7 +1,7 @@
 "use client"
 
 import Header from "@/components/Header";
-import UserProfile from "@/hooks/user-profile";
+// import UserProfile from "@/hooks/user-profile";
 import Image from "next/image";
 
 const ProfileTestPage = () => {

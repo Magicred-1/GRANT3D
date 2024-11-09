@@ -5,7 +5,7 @@ import Confetti from 'react-confetti'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { TrendingUp, Clock, Users, DollarSign, Heart, ThumbsUp, PiggyBank, Save, Car, Eye } from "lucide-react"
+import { TrendingUp, Clock, Users, DollarSign, ThumbsUp, Eye } from "lucide-react"
 import Header from './Header'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel'
