@@ -11,6 +11,7 @@ import { useXRPL } from '@/components/web3auth/XRPLProvider/useXRPL'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Header from '@/components/Header'
 import { QRCodeDialog } from '@/components/dialogs/WalletDialog'
+import { dropsToXrp } from 'xrpl'
 
 const userData = {
   name: "Alice Johnson",
@@ -35,6 +36,7 @@ export default function UserProfile() {
   const [isEditing, setIsEditing] = useState(false)
   const [editedUser, setEditedUser] = useState(userData)
   const [walletAddress, setWalletAddress] = useState<string | null>(null)
+  const [walletBalance, setWalletBalance] = useState<string | null>(null)
   const [isQRCodeOpen, setIsQRCodeOpen] = useState(false)
   interface UserInfo {
     balance: string;
@@ -47,9 +49,46 @@ export default function UserProfile() {
 
   useEffect(() => {
     const fetchWalletAddress = async () => {
-      const address = await getAccounts()
-      console.table(address)
-      setWalletAddress(address.Account)
+      const userAccount = await getAccounts()
+      console.table(userAccount)
+
+    //   {
+    //     "account_data": {
+    //         "Account": "rGNwLLf9vf4dQyq6QuuP1gbwqK4iQmPsBc",
+    //         "Balance": "15000000",
+    //         "Flags": 0,
+    //         "LedgerEntryType": "AccountRoot",
+    //         "OwnerCount": 0,
+    //         "PreviousTxnID": "5EE4C7D1FFAAD964674E7C3DB74D50910D90F0EAC3C97B50752AB9B067842B99",
+    //         "PreviousTxnLgrSeq": 2172141,
+    //         "Sequence": 2172141,
+    //         "index": "D04521ACFC1AF12AE9616C656C6FE25C914BBB695BF60DAC4F4E5F6BC33DC628"
+    //     },
+    //     "account_flags": {
+    //         "allowTrustLineClawback": false,
+    //         "defaultRipple": false,
+    //         "depositAuth": false,
+    //         "disableMasterKey": false,
+    //         "disallowIncomingCheck": false,
+    //         "disallowIncomingNFTokenOffer": false,
+    //         "disallowIncomingPayChan": false,
+    //         "disallowIncomingTrustline": false,
+    //         "disallowIncomingXRP": false,
+    //         "globalFreeze": false,
+    //         "noFreeze": false,
+    //         "passwordSpent": false,
+    //         "requireAuthorization": false,
+    //         "requireDestinationTag": false
+    //     },
+    //     "ledger_current_index": 2172264,
+    //     "queue_data": {
+    //         "txn_count": 0
+    //     },
+    //     "status": "success",
+    //     "validated": false
+    // }
+      setWalletAddress(userAccount.account_data.Account)
+      setWalletBalance(userAccount.account_data.Balance)
     }
     fetchWalletAddress()
   }, [getAccounts])
@@ -171,7 +210,11 @@ export default function UserProfile() {
                         />
                       )}
                       {/* Balance of wallet */}
-                      <p className="text-sm text-gray-600">Balance: {userInformations?.balance}</p>
+                      {
+                        userInformations && walletBalance && (
+                          <p className="text-sm text-gray-600">Balance: {dropsToXrp(walletBalance)} XRP</p>
+                        )
+                      }
                     </div>
                   </div>
                 </div>

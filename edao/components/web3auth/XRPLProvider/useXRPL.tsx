@@ -35,7 +35,7 @@ interface MultiChainState {
   getUserInfo: () => Promise<any>;
   getAccounts: () => Promise<any>;
   getBalance: () => Promise<any>;
-  sendTransaction: () => Promise<void>;
+  sendTransaction: (address: string, amount: string) => Promise<void>;
   signMessage: () => Promise<void>;
 }
 
@@ -206,13 +206,13 @@ export const useXRPL = (): MultiChainState => {
     return await xrplRPC.getBalance();
   };
 
-  const sendTransaction = async () => {
+  const sendTransaction = async (address: string, amount: string) => {
     if (!provider) {
       console.log("provider not initialized yet");
       return;
     }
     const xrplRPC = new XrplRPC(provider);
-    const receipt = await xrplRPC.signAndSendTransaction();
+    const receipt = await xrplRPC.signAndSendTransaction(address, amount);
     console.log(receipt);
   };
 
