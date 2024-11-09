@@ -5,7 +5,7 @@ import Confetti from 'react-confetti'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { TrendingUp, Clock, Users, DollarSign, Heart, ThumbsUp, PiggyBank, Save, Car } from "lucide-react"
+import { TrendingUp, Clock, Users, DollarSign, Heart, ThumbsUp, PiggyBank, Save, Car, Eye } from "lucide-react"
 import Header from './Header'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel'
@@ -115,13 +115,7 @@ export default function ModernCrowdfundingPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         
         {campaigns.map((campaign) => (
-            <Card key={campaign.id} className="relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
-              onClick={
-                () => {
-                  router.push(`/campaigns/${campaign.id}`);
-                }
-              }
-            >
+            <Card key={campaign.id} className="relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
               <CardHeader className="p-0">
                 <Carousel className="w-full">
                   <CarouselContent>
@@ -180,9 +174,15 @@ export default function ModernCrowdfundingPage() {
                 </div>
               </CardContent>
               <CardFooter className="flex justify-between p-6 pt-0">
-                <Button variant="outline" className="w-full mr-2">
-                  <Heart className="mr-2 h-4 w-4" />
-                  Like
+                <Button variant="outline" className="w-full mr-2"
+                   onClick={
+                    () => {
+                      router.push(`/campaigns/${campaign.id}`);
+                    }
+                  }
+                >
+                  <Eye className="mr-2 h-4 w-4" />
+                  View More
                 </Button>
               </CardFooter>
             </Card>
