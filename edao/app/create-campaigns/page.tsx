@@ -92,20 +92,24 @@ export default function CampaignCreation() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const ipfsUrls = await Promise.all(
-        images.map(async (image) => {
-          const url = await pinFileToIPFS(image.file);
-          return url;
-        })
-      );
-      setFormData((prevState: any) => ({
-        ...prevState,
-        ipfsImages: ipfsUrls,
-      }));
-      console.log("Form submitted:", { ...formData, ipfsImages: ipfsUrls });
-      // Here you would typically send the data to your backend
+      const response = await fetch("/api/campaigns/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create campaign");
+      }
+
+      const data = await response.json();
+      console.log("Campaign created successfully:", data);
+      // Handle success (e.g., redirect or show a success message)
     } catch (error) {
-      console.error("Error uploading images to IPFS:", error);
+      console.error("Error creating campaign:", error);
+      // Handle error (e.g., show an error message)
     }
   };
 
