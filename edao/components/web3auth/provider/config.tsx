@@ -42,18 +42,19 @@ const authAdapter = new AuthAdapter({
     uxMode: "redirect",
     loginConfig: {
       email_passwordless: {
-        verifier: "edao-social-login", // Pass your verifier name
+        verifier: "edao-social-login2", // Pass your verifier name
+        verifierSubIdentifier: "email",
         typeOfLogin: "email_passwordless",
         clientId, // Pass the Web3Auth `Client ID` here.
       },
       google: {
-        verifier: "edao-social-login", // Pass your verifier name
+        verifier: "edao-social-login2", // Pass your verifier name
         verifierSubIdentifier: "google",
         typeOfLogin: "google",
-        clientId: "901888887461-q5ngnuojmvd8vbpol2v3g8id39mb13v6.apps.googleusercontent.com", // Pass the Google `Client ID` here.
+        clientId: "51818039411-du7fd6nmrl888d0rnf9t7skha54cp8ud.apps.googleusercontent.com", // Pass the Google `Client ID` here.
       },
       jwt: {
-        verifier: "edao-social-login", // Pass the Verifier name here
+        verifier: "edao-social-login2", // Pass the Verifier name here
         typeOfLogin: "jwt", // Pass on the login provider of the verifier you've created
         clientId: "hUVVf4SEsZT7syOiL0gLU9hFEtm2gQ6O", // Pass on the Auth0 `Client ID` here
       },
