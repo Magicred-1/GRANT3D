@@ -15,14 +15,14 @@ import { useRouter } from 'next/navigation'
 const initialCampaigns = [
   { 
     id: 1, 
-    title: "TUM Munich IT Curriculum",
+    title: "Stanford - Computer Science MBA",
     description: "Reduce plastic waste with our innovative design", 
     goal: 50000, 
     raised: 32500, 
     backers: 650,
     daysLeft: 15, 
     images: [
-      "/placeholder.svg?height=200&width=400",
+      "/profile-pic-1.JPG",
       "/placeholder.svg?height=200&width=400&text=Image+2",
       "/placeholder.svg?height=200&width=400&text=Image+3"
     ], 
@@ -30,14 +30,14 @@ const initialCampaigns = [
   },
   { 
     id: 2, 
-    title: "Paris Sorbonne Medecine Curriculum",
+    title: "MIT - Blockchain Engineer",
     description: "Making learning fun and interactive for children", 
     goal: 75000, 
     raised: 45000, 
     backers: 890, 
     daysLeft: 22, 
     images: [
-      "/placeholder.svg?height=200&width=400",
+      "/profile-pic-2.JPG",
       "/placeholder.svg?height=200&width=400&text=Image+2",
       "/placeholder.svg?height=200&width=400&text=Image+3"
     ], 
@@ -45,10 +45,11 @@ const initialCampaigns = [
   },
   { 
     id: 3, 
-    title: "Going to Harvard",
+    title: "UCLA - Digital Marketing",
+    description: "Photography is my passion. Help me live from it.", 
     daysLeft: 30, 
     images: [
-      "/placeholder.svg?height=200&width=400",
+      "/profile-pic-3.JPG",
       "/placeholder.svg?height=200&width=400&text=Image+2",
       "/placeholder.svg?height=200&width=400&text=Image+3"
     ], 

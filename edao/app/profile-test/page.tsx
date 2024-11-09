@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import Header from "@/components/Header";
-// import UserProfile from "@/hooks/user-profile";
+
+// import UserProfile from "@/hooks/user-profile";   
 import Image from "next/image";
 import { Button } from "@/components/ui/button"
 import { CardContent, CardFooter } from "@/components/ui/card"
@@ -12,9 +12,7 @@ const ProfileTestPage = () => {
     return (
         <div className="bg-viovio/25 w-full h-full flex flex-col items-center gap-10 pb-20">
 
-        <div className="fixed w-full">
-            <Header/>
-        </div>
+ 
         
 
         <div className="flex flex-row gap-10 pt-32">
@@ -96,7 +94,7 @@ const ProfileTestPage = () => {
 
         </div>
 
-        <div className="grid grid-cols-2 w-[80%] gap-4">
+        <div className="md:grid md:grid-cols-2 flex flex-col w-[80%] gap-4">
             <div className="bg-vioviologo text-white text-xl text-center p-3 rounded-xl">
                 Acceptance-letter-Stanford.pdf
             </div>
