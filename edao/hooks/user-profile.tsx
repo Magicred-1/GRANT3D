@@ -1,14 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
-import { User, Mail, MapPin, Calendar, DollarSign, Award, Edit2, Save } from "lucide-react"
+import { User, MapPin, Calendar, DollarSign, Award, Edit2, Save, Wallet, QrCode } from "lucide-react"
+import { useXRPL } from '@/components/web3auth/XRPLProvider/useXRPL'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import Header from '@/components/Header'
+import { QRCodeDialog } from '@/components/dialogs/WalletDialog'
 
 // Mock user data
 const userData = {
@@ -31,6 +33,19 @@ const userData = {
 export default function UserProfile() {
   const [isEditing, setIsEditing] = useState(false)
   const [editedUser, setEditedUser] = useState(userData)
+  const [walletAddress, setWalletAddress] = useState<string | null>(null)
+  const [isQRCodeOpen, setIsQRCodeOpen] = useState(false) // State for opening QR code dialog
+
+  const { getAccounts } = useXRPL()
+
+  useEffect(() => {
+    const fetchWalletAddress = async () => {
+      // Fetch the wallet address from the XRPL when component mounts
+      const address = await getAccounts()
+      setWalletAddress(address)
+    }
+    fetchWalletAddress()
+  }, [getAccounts])
 
   const handleEdit = () => {
     setIsEditing(true)
@@ -45,6 +60,9 @@ export default function UserProfile() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedUser({ ...editedUser, [e.target.name]: e.target.value })
   }
+
+  const openQRCodeDialog = () => setIsQRCodeOpen(true)
+  const closeQRCodeDialog = () => setIsQRCodeOpen(false)
 
   return (
     <div className="min-h-screen bg-viovio/25 dark:bg-gray-900">
@@ -123,6 +141,25 @@ export default function UserProfile() {
                   ) : (
                     <p className="text-sm text-gray-600">{editedUser.bio}</p>
                   )}
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                    <Wallet className="w-8 h-8 text-primary mb-2" />
+                    <p className="text-2xl font-bold">{walletAddress || "Not Set"}</p>
+                    <div className="flex items-center space-x-2">
+                      <Button variant="outline" size="sm" onClick={openQRCodeDialog}>
+                        <QrCode className="w-4 h-4" />
+                        Show QR Code
+                      </Button>
+                      {isQRCodeOpen && (
+                        <QRCodeDialog
+                          walletAddress={walletAddress || ""}
+                          isOpen={isQRCodeOpen}
+                          onClose={closeQRCodeDialog}
+                        />
+                      )}
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
