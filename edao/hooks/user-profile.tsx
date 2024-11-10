@@ -45,15 +45,19 @@ export default function UserProfile() {
 
   const [userInformations, setUserInformations] = useState<UserInfo | null>(null)
 
-  const { getAccounts, getUserInfo } = useXRPL()
+  const { getAccounts, getAllBalances, getUserInfo } = useXRPL()
 
   useEffect(() => {
     const fetchWalletAddress = async () => {
       const userAccount = await getAccounts()
       console.table(userAccount)
 
-      setWalletAddress(userAccount.account_data.Account)
-      setWalletBalance(userAccount.account_data.Balance)
+      const userBalances = await getAllBalances()
+
+      console.table(userBalances)
+
+      setWalletAddress(userAccount.account)
+      setWalletBalance(userBalances[0].balance)
     }
     fetchWalletAddress()
   }, [getAccounts])

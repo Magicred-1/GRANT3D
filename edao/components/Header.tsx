@@ -23,11 +23,11 @@ const Header = () => {
     avatar: "/placeholder.svg?height=128&width=128",
   });
 
-//   useEffect(() => {
-//     if (!isConnected) {
-//       router.push("/");
-//     }
-//   }, [isConnected]);
+  useEffect(() => {
+    if (!isConnected) {
+      router.push("/");
+    }
+  }, [isConnected]);
 
   useEffect(() => {
     if (isConnected) {
