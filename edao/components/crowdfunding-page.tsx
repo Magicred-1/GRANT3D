@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Confetti from "react-confetti";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,85 +33,6 @@ import {
   CarouselPrevious,
 } from "./ui/carousel";
 
-// Mock data for crowdfunding campaigns
-const initialCampaigns = [
-  {
-    id: 1,
-    title: "Eco-Friendly Water Bottle",
-    description: "Reduce plastic waste with our innovative design",
-    goal: 50000,
-    raised: 32500,
-    backers: 650,
-    daysLeft: 15,
-    images: [
-      "/profile-pic-1.JPG",
-      "/placeholder.svg?height=200&width=400&text=Image+2",
-      "/placeholder.svg?height=200&width=400&text=Image+3",
-    ],
-    votes: 0,
-  },
-  {
-    id: 2,
-    title: "Educational App for Kids",
-    description: "Making learning fun and interactive for children",
-    goal: 75000,
-    raised: 45000,
-    backers: 890,
-    daysLeft: 22,
-    images: [
-      "/profile-pic-2.JPG",
-      "/placeholder.svg?height=200&width=400&text=Image+2",
-      "/placeholder.svg?height=200&width=400&text=Image+3",
-    ],
-    votes: 0,
-  },
-  {
-    id: 3,
-    title: "Community Garden Project",
-    description: "Creating green spaces in urban areas",
-    goal: 30000,
-    raised: 28500,
-    backers: 420,
-    daysLeft: 5,
-    images: [
-      "/placeholder.svg?height=200&width=400",
-      "/placeholder.svg?height=200&width=400&text=Image+2",
-      "/placeholder.svg?height=200&width=400&text=Image+3",
-    ],
-    votes: 0,
-  },
-  {
-    id: 4,
-    title: "Renewable Energy Startup",
-    description: "Developing affordable solar solutions",
-    goal: 100000,
-    raised: 75000,
-    backers: 1200,
-    daysLeft: 30,
-    images: [
-      "/placeholder.svg?height=200&width=400",
-      "/placeholder.svg?height=200&width=400&text=Image+2",
-      "/placeholder.svg?height=200&width=400&text=Image+3",
-    ],
-    votes: 0,
-  },
-  {
-    id: 5,
-    title: "Indie Film Production",
-    description: "Supporting local artists and storytellers",
-    goal: 60000,
-    raised: 18000,
-    backers: 300,
-    daysLeft: 45,
-    images: [
-      "/placeholder.svg?height=200&width=400",
-      "/placeholder.svg?height=200&width=400&text=Image+2",
-      "/placeholder.svg?height=200&width=400&text=Image+3",
-    ],
-    votes: 0,
-  },
-];
-
 const fetchCampaigns = async () => {
   const response = await fetch("/api/campaigns/get");
   if (!response.ok) {
@@ -137,32 +58,25 @@ export default function ModernCrowdfundingPage() {
         setCampaigns([]); // Set campaigns to an empty array on error
       }
     };
+    console.log("");
+    console.log("");
+    console.log("");
+    console.log("campaigns", campaigns);
+    console.log("");
+    console.log("");
+    console.log("");
 
     loadCampaigns();
   }, []);
 
-  console.log("");
-  console.log("");
-  console.log("");
-  console.log("campaigns", campaigns);
-  console.log("");
-  console.log("");
-  console.log("");
+  const [voteCount, setVoteCount] = useState(0);
+  const handleVote = (id: number, increment: number) => {
+    setVoteCount((prevCount) => prevCount + 1);
+    console.log("voteCount", voteCount);
 
-  // const handleVote = (id: number, increment: number) => {
-  //   setCampaigns((prevCampaigns) =>
-  //     prevCampaigns.map((campaign) =>
-  //       campaign.id === id
-  //         ? { ...campaign, votes: campaign.votes + increment }
-  //         : campaign
-  //     )
-  //   );
-  //   // Trigger confetti on upvote
-  //   if (increment > 0) {
-  //     setShowConfetti(true);
-  //     setTimeout(() => setShowConfetti(false), 1500); // Hide confetti after 1.5 seconds
-  //   }
-  // };
+    setShowConfetti(true);
+    setTimeout(() => setShowConfetti(false), 3500); // Hide confetti after 1.5 seconds
+  };
 
   return (
     <div className="min-h-screen bg-viovio/25 dark:bg-gray-900">
@@ -205,17 +119,22 @@ export default function ModernCrowdfundingPage() {
                   <CardHeader className="p-0">
                     <Carousel className="w-full">
                       <CarouselContent>
-                        {campaign.ipfsImage.map((image, index) => (
-                          <CarouselItem key={index}>
-                            <div className="p-1">
-                              <img
-                                src={image}
-                                alt={`${campaign.title} - Image ${index + 1}`}
-                                className="w-full h-[400px] object-cover rounded-lg"
-                              />
-                            </div>
-                          </CarouselItem>
-                        ))}
+                        {campaign.ipfsImages &&
+                        campaign.ipfsImages.length > 0 ? (
+                          campaign.ipfsImages.map((image, index) => (
+                            <CarouselItem key={index}>
+                              <div className="p-1">
+                                <img
+                                  src={image}
+                                  alt={`${campaign.title} - Image ${index + 1}`}
+                                  className="w-full h-[200px] object-cover rounded-lg"
+                                />
+                              </div>
+                            </CarouselItem>
+                          ))
+                        ) : (
+                          <div></div>
+                        )}
                       </CarouselContent>
                       <CarouselPrevious />
                       <CarouselNext />
@@ -225,11 +144,12 @@ export default function ModernCrowdfundingPage() {
                       size="sm"
                       className="absolute top-2 right-2 p-5 w-8 h-8"
                       aria-label="Vote up"
+                      onClick={handleVote}
                     >
-                      {/* <div className="flex items-center justify-center h-full w-full gap-1">
+                      <div className="flex items-center justify-center h-full w-full gap-1">
                         <ThumbsUp className="h-4 w-4 text-green-500" />
-                        {campaign.votes}
-                      </div> */}
+                        {voteCount}
+                      </div>
                     </Button>
                   </CardHeader>
                   <CardContent className="p-6">
@@ -248,32 +168,37 @@ export default function ModernCrowdfundingPage() {
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="flex items-center">
                         <DollarSign className="mr-2 h-4 w-4 text-green-500" />
-                        {/* <span className="font-medium">
-                          ${campaign.raised.toLocaleString()}
-                        </span> */}
+                        <span className="font-medium">0</span>
                         <span className="text-muted-foreground ml-1">
                           raised
                         </span>
                       </div>
                       <div className="flex items-center justify-end">
                         <Users className="mr-2 h-4 w-4 text-blue-500" />
-                        <span className="font-medium">{campaign.backers}</span>
+                        <span className="font-medium">0</span>
                         <span className="text-muted-foreground ml-1">
                           backers
                         </span>
                       </div>
                       <div className="flex items-center">
                         <Clock className="mr-2 h-4 w-4 text-yellow-500" />
-                        {/* <span className="font-medium">{campaign.daysLeft}</span> */}
+                        <span className="font-medium">
+                          {new Date(campaign.deadline).toLocaleDateString(
+                            "en-GB",
+                            {
+                              year: "numeric",
+                              month: "2-digit",
+                              day: "2-digit",
+                            }
+                          )}
+                        </span>{" "}
                         <span className="text-muted-foreground ml-1">
-                          days left
+                          deadline
                         </span>
                       </div>
                       <div className="flex items-center justify-end">
                         <DollarSign className="mr-2 h-4 w-4 text-purple-500" />
-                        {/* <span className="font-medium">
-                          ${campaign.goal.toLocaleString()}
-                        </span> */}
+                        <span className="font-medium">${campaign.goal}</span>
                         <span className="text-muted-foreground ml-1">goal</span>
                       </div>
                     </div>

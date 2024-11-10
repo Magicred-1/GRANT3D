@@ -26,6 +26,7 @@ model Campaign {
   experience              String
   fundingType             String
   ipfsImages              String[]
+  escrowHash              String
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
 }

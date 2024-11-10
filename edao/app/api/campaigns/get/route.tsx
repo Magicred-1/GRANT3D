@@ -12,6 +12,7 @@ export async function GET() {
     return NextResponse.json({ data: campaigns });
   } catch (error: any) {
     // Handle any errors that occur during the database query
+    console.log("ERROR MESSGA ->", error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
