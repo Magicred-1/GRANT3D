@@ -142,7 +142,7 @@ export default function CampaignCreation() {
         throw new Error("Failed to create campaign");
       }
 
-      toast.sucess("Campaign created successfully");
+      toast.success("Campaign created successfully");
 
       const data = await response.json();
       console.log("Campaign created successfully:", data);
