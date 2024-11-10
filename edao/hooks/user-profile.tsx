@@ -11,6 +11,7 @@ import { useXRPL } from '@/components/web3auth/XRPLProvider/useXRPL'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Header from '@/components/Header'
 import { QRCodeDialog } from '@/components/dialogs/WalletDialog'
+import { dropsToXrp } from 'xrpl'
 
 const userData = {
   name: "Alice Johnson",
@@ -35,16 +36,24 @@ export default function UserProfile() {
   const [isEditing, setIsEditing] = useState(false)
   const [editedUser, setEditedUser] = useState(userData)
   const [walletAddress, setWalletAddress] = useState<string | null>(null)
+  const [walletBalance, setWalletBalance] = useState<string | null>(null)
   const [isQRCodeOpen, setIsQRCodeOpen] = useState(false)
-  const [userInformations, setUserInformations] = useState(null)
+  interface UserInfo {
+    balance: string;
+    // Add other properties if needed
+  }
+
+  const [userInformations, setUserInformations] = useState<UserInfo | null>(null)
 
   const { getAccounts, getUserInfo } = useXRPL()
 
   useEffect(() => {
     const fetchWalletAddress = async () => {
-      const address = await getAccounts()
-      console.log(address)
-      setWalletAddress(address.account)
+      const userAccount = await getAccounts()
+      console.table(userAccount)
+
+      setWalletAddress(userAccount.account_data.Account)
+      setWalletBalance(userAccount.account_data.Balance)
     }
     fetchWalletAddress()
   }, [getAccounts])
@@ -145,25 +154,46 @@ export default function UserProfile() {
                     <p className="text-sm text-gray-600">{editedUser.bio || userData.bio}</p>
                   )}
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                    <Wallet className="w-8 h-8 text-primary mb-2" />
-                    <p className="text-2xl font-bold">{shortenAddress(walletAddress || "")}</p>
-                    <div className="flex items-center space-x-2">
-                      <Button variant="outline" size="sm" onClick={openQRCodeDialog}>
-                        <QrCode className="w-4 h-4" />
-                        Show QR Code
-                      </Button>
-                      {isQRCodeOpen && (
-                        <QRCodeDialog
-                          walletAddress={walletAddress || ""}
-                          isOpen={isQRCodeOpen}
-                          onClose={closeQRCodeDialog}
-                        />
-                      )}
-                    </div>
+                <div className="flex flex-col items-center p-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                  <div className="flex items-center mb-3 space-x-2">
+                    <Wallet className="w-6 h-6 text-white" />
+                    <span className="font-semibold text-lg text-black">Wallet Information</span>
                   </div>
+
+                  <div className="flex flex-col items-center text-center">
+                    <p className="text-sm text-black">Address:</p>
+                    <p className="text-xl font-bold tracking-wider mb-4">{shortenAddress(walletAddress || "Not Connected")}</p>
+                  </div>
+
+                  <div className="flex items-center justify-center space-x-4">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={openQRCodeDialog} 
+                      className="bg-white text-gray-700 hover:bg-gray-200 transition rounded-full"
+                    >
+                      <QrCode className="w-4 h-4 mr-1" />
+                      Show QR Code
+                    </Button>
+
+                    {isQRCodeOpen && (
+                      <QRCodeDialog
+                        walletAddress={walletAddress || ""}
+                        isOpen={isQRCodeOpen}
+                        onClose={closeQRCodeDialog}
+                      />
+                    )}
+                  </div>
+
+                  {userInformations && walletBalance && (
+                    <div className="mt-4 text-center">
+                      <p className="text-lg font-semibold">Balance:</p>
+                      <p className="text-2xl font-bold text-yellow-300">{dropsToXrp(walletBalance)} XRP</p>
+                    </div>
+                  )}
                 </div>
+
+
               </CardContent>
             </Card>
           </div>

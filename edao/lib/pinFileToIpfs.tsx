@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export function convertObjectToFile(object: any): File {
   const blob = new Blob([JSON.stringify(object)], {
     type: "application/json",

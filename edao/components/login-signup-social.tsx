@@ -10,13 +10,26 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BookOpen, Globe } from 'lucide-react'
 import { useXRPL } from './web3auth/XRPLProvider/useXRPL'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 export function LoginSignupSocial() {
   const [isLogin, setIsLogin] = useState(true)
   const { loginEmailPasswordless, isConnected } = useXRPL()
   const [email, setEmail] = useState('')
-  
+  const [activeTab, setActiveTab] = useState('login') // State to track active tab
   const router = useRouter()
+
+    // Sync with URL hash on component mount
+    useEffect(() => {
+      const currentHash = window.location.hash.substring(1)
+      if (currentHash === 'signup') setActiveTab('signup')
+      else setActiveTab('login')
+    }, [])
+  
+    // Update URL when the tab changes
+    useEffect(() => {
+      window.location.hash = activeTab
+    }, [activeTab])
 
   useEffect(() => {
     if (isConnected) {
@@ -53,7 +66,7 @@ export function LoginSignupSocial() {
               transition={{ duration: 0.5 }}
               className="flex items-center justify-center space-x-2"
             >
-              <span>eDAOcation</span>
+              <Image src="/grant3d_logo.png" alt="Logo" width={150} height={40} className="w-36 md:w-48 lg:w-52" />
             </motion.div>
           </CardTitle>
           <CardDescription className="text-center">

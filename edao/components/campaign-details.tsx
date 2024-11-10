@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -13,7 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import { DollarSign, Users, Clock, Heart, Share2, Facebook, Twitter, Linkedin, Mail, User, MapPin, Calendar, Award, LucideVerified } from "lucide-react"
+import { Heart, User, MapPin, Award, LucideVerified } from "lucide-react"
 import Header from './Header'
 import { ShareDialog } from './dialogs/ShareDialog'
 import { useRouter } from 'next/navigation'
@@ -67,10 +67,6 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
 
   const router = useRouter()
 
-  const handleShareLink = () => {
-    setIsShareDialogOpen(true)
-  }
-
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <style jsx global>{`
@@ -90,7 +86,7 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
                 {campaign.images.map((image, index) => (
                   <CarouselItem key={index}>
                     <div className="p-1">
-                      <img src={image} alt={`${campaign.title} - Image ${index + 1}`} className="w-full h-[400px] object-cover rounded-lg" />
+                      <img src={image} alt={`${campaign.title} ${id} - Image ${index + 1}`} className="w-full h-[400px] object-cover rounded-lg" />
                     </div>
                   </CarouselItem>
                 ))}
@@ -159,7 +155,7 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
                     <p className="text-gray-500">days left</p>
                   </div>
                 </div>
-                <Button className="w-full mb-4 bg-secondary hover:bg-secondary/90">Back This Project</Button>
+                <Button className="w-full mb-4 bg-secondary hover:bg-secondary/90">Support This Project</Button>
                 <div className="flex justify-between">
                   <Button variant="outline" onClick={() => setIsLiked(!isLiked)}>
                     <Heart className={`mr-2 h-4 w-4 ${isLiked ? 'fill-red-500 text-red-500' : ''}`} />

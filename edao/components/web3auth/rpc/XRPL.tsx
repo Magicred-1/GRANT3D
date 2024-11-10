@@ -82,7 +82,7 @@ export default class XrplRPC {
     }
   };
 
-  signAndSendTransaction = async (): Promise<any> => {
+  signAndSendTransaction = async (address: string, amount: string): Promise<any> => {
     try {
       const accounts = await this.provider.request<never, string[]>({
         method: "xrpl_getAccounts",
@@ -92,8 +92,8 @@ export default class XrplRPC {
         const tx: Payment = {
           TransactionType: "Payment",
           Account: accounts[0] as string,
-          Amount: xrpToDrops(2),
-          Destination: "raYzhtCitpdZivyVN2XBj2xvHKSmBjft2n",
+          Amount: xrpToDrops(amount),
+          Destination: address,
         };
         const txSign = await this.provider.request({
           method: "xrpl_submitTransaction",

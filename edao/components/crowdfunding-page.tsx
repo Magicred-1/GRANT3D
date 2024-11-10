@@ -44,7 +44,7 @@ const initialCampaigns = [
     backers: 650,
     daysLeft: 15,
     images: [
-      "/placeholder.svg?height=200&width=400",
+      "/profile-pic-1.JPG",
       "/placeholder.svg?height=200&width=400&text=Image+2",
       "/placeholder.svg?height=200&width=400&text=Image+3",
     ],
@@ -59,7 +59,7 @@ const initialCampaigns = [
     backers: 890,
     daysLeft: 22,
     images: [
-      "/placeholder.svg?height=200&width=400",
+      "/profile-pic-2.JPG",
       "/placeholder.svg?height=200&width=400&text=Image+2",
       "/placeholder.svg?height=200&width=400&text=Image+3",
     ],

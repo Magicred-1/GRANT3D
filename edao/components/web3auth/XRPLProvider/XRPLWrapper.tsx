@@ -22,7 +22,7 @@ interface XRPLChainProviderContextProps {
     getUserInfo: () => Promise<any>;
     getAccounts: () => Promise<any>;
     getBalance: () => Promise<any>;
-    sendTransaction: () => Promise<void>;
+    sendTransaction: (address: string, amount: string) => Promise<void>;
     signMessage: () => Promise<void>;
 }
 
