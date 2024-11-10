@@ -15,8 +15,8 @@ import { useRouter } from 'next/navigation'
 const initialCampaigns = [
   { 
     id: 1, 
-    title: "Stanford - Computer Science MBA",
-    description: "Reduce plastic waste with our innovative design", 
+    title: "Espoir",
+    description: "Stanford - Computer Science MBA", 
     goal: 50000, 
     raised: 32500, 
     backers: 650,
@@ -30,8 +30,8 @@ const initialCampaigns = [
   },
   { 
     id: 2, 
-    title: "MIT - Blockchain Engineer",
-    description: "Making learning fun and interactive for children", 
+    title: "Jim",
+    description: "MIT - Blockchain Engineering", 
     goal: 75000, 
     raised: 45000, 
     backers: 890, 
@@ -45,26 +45,11 @@ const initialCampaigns = [
   },
   { 
     id: 3, 
-    title: "UCLA - Digital Marketing",
-    description: "Photography is my passion. Help me live from it.", 
+    title: "Rahul",
+    description: "UCLA - Digital Marketing", 
     daysLeft: 30, 
     images: [
       "/profile-pic-3.JPG",
-      "/placeholder.svg?height=200&width=400&text=Image+2",
-      "/placeholder.svg?height=200&width=400&text=Image+3"
-    ], 
-    votes: 0 
-  },
-  { 
-    id: 5, 
-    title: "Local Art Exhibition",
-    description: "Supporting local artists and storytellers", 
-    goal: 60000, 
-    raised: 18000, 
-    backers: 300, 
-    daysLeft: 45, 
-    images: [
-      "/placeholder.svg?height=200&width=400",
       "/placeholder.svg?height=200&width=400&text=Image+2",
       "/placeholder.svg?height=200&width=400&text=Image+3"
     ], 

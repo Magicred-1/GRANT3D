@@ -155,7 +155,7 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
                     <p className="text-gray-500">days left</p>
                   </div>
                 </div>
-                <Button className="w-full mb-4 bg-secondary hover:bg-secondary/90">Back This Project</Button>
+                <Button className="w-full mb-4 bg-secondary hover:bg-secondary/90">Support This Project</Button>
                 <div className="flex justify-between">
                   <Button variant="outline" onClick={() => setIsLiked(!isLiked)}>
                     <Heart className={`mr-2 h-4 w-4 ${isLiked ? 'fill-red-500 text-red-500' : ''}`} />
