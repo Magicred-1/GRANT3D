@@ -6,5 +6,6 @@ export default async function Page({
   params: Promise<{ id: number }>
 }) {
   const id = (await params).id
+  console.log('id', id)
   return <CampaignDetails id={1} />;
 }
