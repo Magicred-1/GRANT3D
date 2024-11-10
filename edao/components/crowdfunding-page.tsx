@@ -22,6 +22,7 @@ import {
   PiggyBank,
   Save,
   Car,
+  View,
 } from "lucide-react";
 import Header from "./Header";
 import useWindowSize from "react-use/lib/useWindowSize";
@@ -32,6 +33,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
+import { useRouter } from "next/navigation";
 
 const fetchCampaigns = async () => {
   const response = await fetch("/api/campaigns/get");
@@ -44,9 +46,21 @@ const fetchCampaigns = async () => {
 
 export default function ModernCrowdfundingPage() {
   console.log("ModernCrowdfundingPage");
-  const [campaigns, setCampaigns] = useState([]);
+  interface Campaign {
+    id: number;
+    title: string;
+    description: string;
+    ipfsImages: string[];
+    raised: number;
+    goal: number;
+    deadline: string;
+  }
+
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [showConfetti, setShowConfetti] = useState(false);
   const { width, height } = useWindowSize();
+
+  const router = useRouter();
 
   useEffect(() => {
     const loadCampaigns = async () => {
@@ -144,7 +158,7 @@ export default function ModernCrowdfundingPage() {
                       size="sm"
                       className="absolute top-2 right-2 p-5 w-8 h-8"
                       aria-label="Vote up"
-                      onClick={handleVote}
+                      onClick={() => handleVote(campaign.id, 1)}
                     >
                       <div className="flex items-center justify-center h-full w-full gap-1">
                         <ThumbsUp className="h-4 w-4 text-green-500" />
@@ -204,13 +218,13 @@ export default function ModernCrowdfundingPage() {
                     </div>
                   </CardContent>
                   <CardFooter className="flex justify-between p-6 pt-0">
-                    <Button variant="outline" className="w-full mr-2">
-                      <Heart className="mr-2 h-4 w-4" />
-                      Like
-                    </Button>
-                    <Button className="w-full ml-2 bg-secondary hover:bg-secondary/90">
-                      <PiggyBank />
-                      Support
+                    <Button variant="outline" className="w-full mr-2"
+                      onClick={() => {
+                        router.push(`/campaigns/${campaign.id}`);
+                      }}
+                    >
+                      <View className="mr-2 h-4 w-4" />
+                      View More
                     </Button>
                   </CardFooter>
                 </Card>
