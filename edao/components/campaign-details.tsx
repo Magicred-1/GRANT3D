@@ -187,72 +187,9 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
             </div>
             
         </div>
-        <Card className="">
-          <CardHeader>
-            <CardTitle>About the Creator</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center mb-4">
-              <Avatar className="h-12 w-12 mr-4">
-                <AvatarImage src={campaigns[id].author.avatar} alt={campaigns[id].author.name} />
-                <AvatarFallback>{campaigns[id].author.name.split(' ').map((n: string) => n[0]).join('')}</AvatarFallback>
-              </Avatar>
-              <div>
-                <div className="flex items-center gap-1">
-                  <p className="font-semibold">{campaigns[id].author.name}</p>
-                  <LucideVerified className='text-blue-500'/>
-                </div>
-                <p className="text-sm text-gray-500 flex items-center">
-                  <MapPin className="mr-1 h-4 w-4" />
-                  {campaigns[id].author.location}
-                </p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div className="flex items-center">
-                <User className="mr-2 h-4 w-4" />
-                <span>{campaigns[id].author.campaigns} Campaigns</span>
-              </div>
-              <div className="flex items-center">
-                <Award className="mr-2 h-4 w-4" />
-                <span>{campaigns[id].author.backedCampaigns} Supported</span>
-              </div>
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button variant="outline" className="w-full"
-               onClick={() => {
-                router.push(`/profile/${campaigns[id].author.id}`)
-              }
-              }
-            >View Profile</Button>
-          </CardFooter>
-        </Card> 
 
-    <div className="flex flex-col gap-4 justify-center p-5">
-        <div className="bg-vioviologo text-white text-lgi text-center p-3 rounded-xl cursor-pointer">
-            Acceptance-letter.pdf
-        </div>
-        <div className="bg-vioviologo text-white text-lgi text-center p-3 rounded-xl cursor-pointer">
-            Recommandation-letter-1.pdf
-        </div>
-        <div className="bg-vioviologo text-white text-lgi text-center p-3 rounded-xl cursor-pointer">
-            Recommandation-letter-2.pdf
-        </div>
-        <div className="bg-vioviologo text-white text-lgi text-center p-3 rounded-xl cursor-pointer">
-            Grades-files-2024.pdf
-        </div>
-    </div>            
-    </div>
 
-    <Card className="p-5 w-[80%]">
-        <span className="text-2xl font-bold">Story</span> <br/><br/>
-        {campaigns[id].longDescription}
-    </Card>
-
-    <div className="flex md:flex-row flex-col w-[80%] justify-between gap-4">
-
-    <Card className="flex flex-col p-5 pb-0 rounded-lg bg-white md:text-2xl text-xl">
+        <Card className="flex flex-col p-5 pb-0 rounded-lg bg-white md:text-2xl text-xl">
         <div className="flex flex-row justify-between">
             <div>
                 Accepted to <br/>
@@ -298,26 +235,96 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
           </CardFooter>
     </Card>
 
-    <Card className="flex flex-col p-5 rounded-lg bg-white text-2xl text-center">
+    <Card className="md:py-5 flex flex-col md:gap-5 gap-0">
+          <CardHeader>
+            <CardTitle>About the Creator</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center mb-4">
+              <Avatar className="h-12 w-12 mr-4">
+                <AvatarImage src={campaigns[id].author.avatar} alt={campaigns[id].author.name} />
+                <AvatarFallback>{campaigns[id].author.name.split(' ').map((n: string) => n[0]).join('')}</AvatarFallback>
+              </Avatar>
+              <div>
+                <div className="flex items-center gap-1">
+                  <p className="font-semibold">{campaigns[id].author.name}</p>
+                  <LucideVerified className='text-blue-500'/>
+                </div>
+                <p className="text-sm text-gray-500 flex items-center">
+                  <MapPin className="mr-1 h-4 w-4" />
+                  {campaigns[id].author.location}
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="flex items-center">
+                <User className="mr-2 h-4 w-4" />
+                <span>{campaigns[id].author.campaigns} Campaigns</span>
+              </div>
+              <div className="flex items-center">
+                <Award className="mr-2 h-4 w-4" />
+                <span>{campaigns[id].author.backedCampaigns} Supported</span>
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button variant="outline" className="w-full"
+               onClick={() => {
+                router.push(`/profile/${campaigns[id].author.id}`)
+              }
+              }
+            >View Profile</Button>
+          </CardFooter>
+        </Card> 
 
-        <div className="font-bold pb-5">
-        Presentation
-        </div>
+          
+    </div>
 
-     
+    <div className='flex md:flex-row flex-col gap-4 w-[90%]'>
 
-        <iframe 
-            className="w-full md:w-[560px] h-[200px] md:h-[315px] rounded-[10px]"
-            src={campaigns[id].linkVideo}
-            title="YouTube video player" 
-            frameBorder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowFullScreen
-        />
-       
+    <Card className="py-5 px-8 text-lg">
+        <span className="text-2xl font-bold">Story</span> <br/><br/>
+        {campaigns[id].longDescription}
     </Card>
 
+    <Card className="flex flex-col p-5 rounded-lg bg-white text-2xl text-center">
+
+    <div className="font-bold pb-5">
+    Presentation
     </div>
+
+    <iframe 
+        className="w-full md:w-[560px] h-[200px] md:h-[315px] rounded-[10px]"
+        src={campaigns[id].linkVideo}
+        title="YouTube video player" 
+        frameBorder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowFullScreen
+    />
+
+</Card>
+
+    </div>
+
+    <div className="flex md:flex-row flex-col gap-8 justify-center items-center p-5">
+        <div className='font-bold text-2xl'>Files</div>
+        <div className="bg-vioviologo text-white text-lgi text-center p-4 rounded-xl cursor-pointer">
+            Acceptance-letter.pdf
+        </div>
+        <div className="bg-vioviologo text-white text-lgi text-center p-4 rounded-xl cursor-pointer">
+            Recommandation-letter-1.pdf
+        </div>
+        <div className="bg-vioviologo text-white text-lgi text-center p-4 rounded-xl cursor-pointer">
+            Recommandation-letter-2.pdf
+        </div>
+        <div className="bg-vioviologo text-white text-lgi text-center p-4 rounded-xl cursor-pointer">
+            Grades-files-2024.pdf
+        </div>
+    </div>  
+
+
+
+
 
 
 
