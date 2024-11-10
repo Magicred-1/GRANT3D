@@ -59,6 +59,11 @@ export default function ModernCrowdfundingPage() {
 
   const router = useRouter();
 
+  // Random int function for votes
+  const randomInt = (min: number, max: number) =>
+    Math.floor(Math.random() * (max - min + 1)) + min;
+
+
   useEffect(() => {
     const loadCampaigns = async () => {
       try {
@@ -159,7 +164,7 @@ export default function ModernCrowdfundingPage() {
                     >
                       <div className="flex items-center justify-center h-full w-full gap-1">
                         <ThumbsUp className="h-4 w-4 text-green-500" />
-                        {voteCount}
+                        {randomInt(1, 100)}
                       </div>
                     </Button>
                   </CardHeader>

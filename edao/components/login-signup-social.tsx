@@ -33,10 +33,10 @@ export function LoginSignupSocial() {
     else setActiveTab("login");
   }, []);
 
-  // Update URL when the tab changes
-  useEffect(() => {
-    window.location.hash = activeTab;
-  }, [activeTab]);
+  // // Update URL when the tab changes
+  // useEffect(() => {
+  //   window.location.hash = activeTab;
+  // }, [activeTab]);
 
   useEffect(() => {
     if (isConnected) {
