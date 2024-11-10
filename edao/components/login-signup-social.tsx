@@ -21,7 +21,7 @@ import Image from "next/image";
 
 export function LoginSignupSocial() {
   const [isLogin, setIsLogin] = useState(true);
-  const { loginEmailPasswordless, isConnected } = useXRPL();
+  const { loginEmailPasswordless, loginWithGoogle, isConnected } = useXRPL();
   const [email, setEmail] = useState("");
   const [activeTab, setActiveTab] = useState("login"); // State to track active tab
   const router = useRouter();
@@ -132,7 +132,9 @@ export function LoginSignupSocial() {
                   </div>
                 </div>
                 <SocialButton
-                  onClick={() => {}}
+                  onClick={() => {
+                    loginWithGoogle();
+                  }}
                   className="bg-white hover:bg-gray-50"
                 >
                   <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
