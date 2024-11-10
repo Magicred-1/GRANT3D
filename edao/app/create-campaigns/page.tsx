@@ -25,6 +25,7 @@ import {
 import pinFileToIPFS from "../../lib/pinFileToIpfs";
 import { ImagePlus, X } from "lucide-react";
 import Header from "@/components/Header";
+import { toast } from "sonner";
 
 interface Image {
   file: File;
@@ -140,6 +141,8 @@ export default function CampaignCreation() {
       if (!response.ok) {
         throw new Error("Failed to create campaign");
       }
+
+      toast.sucess("Campaign created successfully");
 
       const data = await response.json();
       console.log("Campaign created successfully:", data);
