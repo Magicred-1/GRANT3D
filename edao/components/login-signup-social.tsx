@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { act, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +25,8 @@ export function LoginSignupSocial() {
   const [email, setEmail] = useState("");
   const [activeTab, setActiveTab] = useState("login"); // State to track active tab
   const router = useRouter();
+
+  console.log(activeTab);
 
   // Sync with URL hash on component mount
   useEffect(() => {
