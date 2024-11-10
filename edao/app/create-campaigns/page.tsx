@@ -102,7 +102,7 @@ export default function CampaignCreation() {
         ...prevData,
         ipfsImages: ipfsUrls,
       }));
-      const response = await fetch("/api/campaigns", {
+      const response = await fetch("/api/campaigns/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

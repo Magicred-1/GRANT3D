@@ -32,7 +32,6 @@ export async function POST(request: Request) {
   }: CampaignData = await request.json();
 
   // Validate and parse input data
-  console.log("ipfs -> ", ipfsImages);
   if (
     typeof title !== "string" ||
     typeof description !== "string" ||
