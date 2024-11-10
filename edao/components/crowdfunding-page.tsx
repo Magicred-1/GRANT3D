@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,17 +13,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import {
   TrendingUp,
   Clock,
   Users,
   DollarSign,
-  Heart,
   ThumbsUp,
-  PiggyBank,
-  Save,
-  Car,
   View,
 } from "lucide-react";
 import Header from "./Header";

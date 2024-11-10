@@ -1,12 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 'use client'
 
-import { useState, MouseEvent } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { ShieldCheck, Clock, PiggyBank, DollarSign } from "lucide-react"
 import Header from './Header'
 import { QRCodeSVG } from 'qrcode.react'
+import { toast } from 'sonner'
+import { sendReceipt } from './server/sendReceipt'
+import { useXRPL } from './web3auth/XRPLProvider/useXRPL'
 
 // Sample XRP reserve data
 const initialXRPData = {
@@ -24,6 +29,17 @@ export default function FundPage() {
   const [selectedTab, setSelectedTab] = useState("XRP")
   const [currency, setCurrency] = useState("USD")
   const [fiatAmount, setFiatAmount] = useState<number | string>("")
+  const { getUserInfo } = useXRPL()
+
+  const [userInfo, setUserInfo] = useState<any>(null)
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const userInfo = await getUserInfo()
+      setUserInfo(userInfo)
+    }
+    fetchUserInfo()
+  }, [])
 
   // Function to simulate refreshing proof of reserve data
   const refreshData = () => {
@@ -35,8 +51,25 @@ export default function FundPage() {
     }))
   }
 
-  function handleFiatDeposit(event: MouseEvent<HTMLButtonElement>): void {
-    throw new Error('Function not implemented.')
+  function handleFiatDeposit(): void {
+    if (fiatAmount === "" || isNaN(Number(fiatAmount))) {
+      alert("Please enter a valid amount.")
+      return
+    }
+
+    toast.success(`Deposited ${fiatAmount} ${currency} successfully!`)
+
+    // { recipientEmail, firstName, associationName, associationAddress, siretNumber, donorAddress, donationAmount, donationDate }
+    sendReceipt({
+      recipientEmail: userInfo.email,
+      firstName: userInfo.name,
+      associationName: "DAO Fund",
+      associationAddress: "123 Main St, San Francisco, CA",
+      siretNumber: "123456789",
+      donorAddress: xrpWalletAddress,
+      donationAmount: fiatAmount.toString(),
+      donationDate: new Date().toISOString().split('T')[0]
+  })
   }
 
   return (

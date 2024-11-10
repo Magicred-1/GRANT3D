@@ -20,14 +20,14 @@ interface SendReceiptProps {
 }
 
 // Send a receipt to a customer
-export async function sendReceipt({ recipientEmail, firstName, associationName, associationAddress, siretNumber, donorAddress, donationAmount, donationDate }: SendReceiptProps): Promise<{ data: any; error: any;
+export async function sendReceipt({ firstName, associationName, associationAddress, siretNumber, donorAddress, donationAmount, donationDate }: SendReceiptProps): Promise<{ data: any; error: any;
 }> {
   try {
     // Send the receipt
     const { data, error } = await resend.emails.send({
-        from: 'Acme <onboarding@resend.dev>',
-        to: [recipientEmail],
-        subject: 'Hello world',
+        from: 'Contact <contact@grant3d.xyz>',
+        to: ["djason.gadiou.sio@gmail.com"],
+        subject: 'Donation Receipt',
         react: EmailTemplate({
           firstName,
           associationName,
