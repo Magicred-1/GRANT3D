@@ -97,7 +97,6 @@ export async function POST(request: Request) {
         experience,
         fundingType,
         ipfsImages,
-        // escrowHash: "escrowHash",
       },
     });
     // await client.disconnect();
