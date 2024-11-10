@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -64,29 +64,47 @@ export default function CampaignCreation() {
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log("Selected files:", e.target.files);
     if (e.target.files && e.target.files.length > 0) {
       const newImages = Array.from(e.target.files)
         .slice(0, 5 - images.length)
         .map((file) => {
-          return new Promise<Image>((resolve) => {
+          return new Promise<Image>((resolve, reject) => {
             const reader = new FileReader();
             reader.onloadend = () => {
-              resolve({
-                file,
-                preview: reader.result as string,
-              });
+              if (reader.result) {
+                resolve({
+                  file,
+                  preview: reader.result as string,
+                });
+              } else {
+                reject(new Error("Failed to read file"));
+              }
+            };
+            reader.onerror = () => {
+              reject(new Error("Error reading file"));
             };
             reader.readAsDataURL(file);
           });
         });
 
-      Promise.all(newImages).then((resolvedImages) => {
-        setImages((prevImages) =>
-          [...prevImages, ...resolvedImages].slice(0, 5)
-        );
-      });
+      Promise.all(newImages)
+        .then((resolvedImages) => {
+          console.log("Resolved images:", resolvedImages);
+          setImages((prevImages) =>
+            [...prevImages, ...resolvedImages].slice(0, 5)
+          );
+        })
+        .catch((error) => {
+          console.error("Error processing images:", error);
+        });
     }
   };
+
+  // Use useEffect to log the updated images state
+  useEffect(() => {
+    console.log("Updated images:", images);
+  }, [images]);
 
   const removeImage = (index: number) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));

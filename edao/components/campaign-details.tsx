@@ -177,19 +177,27 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
 
     <div className="flex md:flex-row flex-col items-center md:gap-6 gap-2">
 
-        <Image src={`/profile-pic-${id}.JPG`} alt="profile pic" height={150} width={220} style={{borderRadius:"10px", objectFit: "cover"}}></Image>
-        <div className="flex flex-col text-4xl p-4 pl-0">
+        <div className='flex flex-row md:gap-8 gap-2 py-4'>
+        <Image 
+          src={`/profile-pic-${id}.JPG`} 
+          alt="profile pic" 
+          height={75} 
+          width={100} 
+          className="md:h-[220px] md:w-[150px] rounded-[10px] object-cover"
+        />
+        <div className="flex flex-col md:text-4xl text-xl p-4 pl-0">
             <div>{campaigns[id].firstname} <span className="font-bold">{campaigns[id].lastname}</span></div>
-            <div className=" font text-2xl">{campaigns[id].age} </div>
-            <div className="flex flex-row text-2xl pt-3">
+            <div className=" font md:text-2xl text-lg">{campaigns[id].age} </div>
+            <div className="flex flex-row md:text-2xl text-lg pt-3">
                 <Image src="/location.svg" alt="" height={30} width={30}></Image>
                 <div>{campaigns[id].location} </div>
             </div>
             
         </div>
+        </div>
 
 
-        <Card className="flex flex-col p-5 pb-0 rounded-lg bg-white md:text-2xl text-xl">
+        <Card className="flex flex-col p-5 pb-0 rounded-lg bg-white md:text-2xl text-xl md:w-[40%] w-[80%]">
         <div className="flex flex-row justify-between">
             <div>
                 Accepted to <br/>
@@ -235,7 +243,7 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
           </CardFooter>
     </Card>
 
-    <Card className="md:py-5 flex flex-col md:gap-5 gap-0">
+    <Card className="md:py-5 flex flex-col md:gap-5 gap-0 md:w-[40%] w-[80%]">
           <CardHeader>
             <CardTitle>About the Creator</CardTitle>
           </CardHeader>
@@ -282,7 +290,7 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
 
     <div className='flex md:flex-row flex-col gap-4 w-[90%]'>
 
-    <Card className="py-5 px-8 text-lg">
+    <Card className="py-5 px-8 md:text-lg text-sm">
         <span className="text-2xl font-bold">Story</span> <br/><br/>
         {campaigns[id].longDescription}
     </Card>
@@ -306,8 +314,7 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
 
     </div>
 
-    <div className="flex md:flex-row flex-col gap-8 justify-center items-center p-5">
-        <div className='font-bold text-2xl'>Files</div>
+    <div className="md:flex md:flex-row grid grid-cols-2 gap-8 justify-center items-center p-5">
         <div className="bg-vioviologo text-white text-lgi text-center p-4 rounded-xl cursor-pointer">
             Acceptance-letter.pdf
         </div>
