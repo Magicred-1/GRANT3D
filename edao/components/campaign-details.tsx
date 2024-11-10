@@ -58,7 +58,7 @@ type Campaign = {
 const campaigns: { [key: number]: Campaign } = {
   1:{
   id: 1,
-  firstname:"Espoir",
+  firstname:"Joyce",
   lastname:"DIABE",
   age:"17 years-old",
   location:"Kenya",
