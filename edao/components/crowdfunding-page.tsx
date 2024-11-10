@@ -204,7 +204,7 @@ export default function ModernCrowdfundingPage() {
                 >
                   <CardHeader className="p-0">
                     <Carousel className="w-full">
-                      {/* <CarouselContent>
+                      <CarouselContent>
                         {campaign.ipfsImage.map((image, index) => (
                           <CarouselItem key={index}>
                             <div className="p-1">
@@ -216,7 +216,7 @@ export default function ModernCrowdfundingPage() {
                             </div>
                           </CarouselItem>
                         ))}
-                      </CarouselContent> */}
+                      </CarouselContent>
                       <CarouselPrevious />
                       <CarouselNext />
                     </Carousel>

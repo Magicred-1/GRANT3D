@@ -4,59 +4,8 @@ import { NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
-<<<<<<< HEAD:edao/app/api/campaigns/create/route.tsx
-  // Parse the request body as JSON
-  const {
-    title,
-    description,
-    goal,
-    deadline,
-    educationalInstitution,
-    courseOfStudy,
-    diploma,
-    experience,
-    fundingType,
-    ipfsImages,
-  }: CampaignData = await request.json();
-
-  // Validate and parse input data
-  if (
-    typeof title !== "string" ||
-    typeof description !== "string" ||
-    typeof educationalInstitution !== "string" ||
-    typeof courseOfStudy !== "string" ||
-    typeof diploma !== "string" ||
-    typeof experience !== "string" ||
-    typeof fundingType !== "string" ||
-    !Array.isArray(ipfsImages) ||
-    !ipfsImages.every((img) => typeof img === "string")
-  ) {
-    throw new Error("Invalid input types");
-  }
-  const parsedGoal = parseFloat(goal);
-  if (isNaN(parsedGoal)) {
-    throw new Error("Invalid goal value");
-  }
-
-  const parsedDeadline = new Date(deadline);
-  if (isNaN(parsedDeadline.getTime())) {
-    throw new Error("Invalid deadline value");
-  }
-
-  if (
-    !Array.isArray(ipfsImages) ||
-    !ipfsImages.every((img) => typeof img === "string")
-  ) {
-    throw new Error("Invalid ipfsImages value");
-  }
-
-  // Create a new campaign record in the database
-  const newCampaign = await prisma.campaign.create({
-    data: {
-=======
   try {
     const {
->>>>>>> 13c4c0d5b3619480c5acfe7362543ae0efa7cfe5:edao/app/api/campaigns/route.tsx
       title,
       description,
       goal,
