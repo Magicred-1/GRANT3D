@@ -23,11 +23,11 @@ const Header = () => {
     avatar: "/placeholder.svg?height=128&width=128",
   });
 
-  useEffect(() => {
-    if (!isConnected) {
-      router.push("/");
-    }
-  }, [isConnected]);
+  // useEffect(() => {
+  //   if (!isConnected) {
+  //     router.push("/");
+  //   }
+  // }, [isConnected]);
 
   useEffect(() => {
     if (isConnected) {
@@ -91,12 +91,9 @@ const Header = () => {
                   className="relative h-8 w-8 rounded-full"
                 >
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={user.avatar} alt={user.name} />
+                    {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
                     <AvatarFallback>
-                      {user.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
+                      D
                     </AvatarFallback>
                   </Avatar>
                 </Button>
@@ -109,10 +106,10 @@ const Header = () => {
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
                     <p className="text-sm font-medium leading-none">
-                      {user.name}
+                      John Doe
                     </p>
                     <p className="text-xs leading-none text-muted-foreground">
-                      {user.email}
+                      john.doe@gmail.com
                     </p>
                   </div>
                 </DropdownMenuLabel>
