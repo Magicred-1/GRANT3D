@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     }
 
     // // Create a new campaign record in the database
-    // const newCampaign = await prisma.campaigns.create({
+    // const newCampaign = await prisma.campaign.create({
     //   data: {
     //     title,
     //     description,
