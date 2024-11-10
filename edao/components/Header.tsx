@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
+import { Avatar, AvatarFallback } from "./ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -22,6 +22,8 @@ const Header = () => {
     email: "djasongadiou@gmail.com",
     avatar: "/placeholder.svg?height=128&width=128",
   });
+
+  console.log(user);
 
   // useEffect(() => {
   //   if (!isConnected) {
