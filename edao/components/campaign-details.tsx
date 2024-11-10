@@ -44,6 +44,7 @@ type Campaign = {
   };
   school: {
     name: string;
+    cursus: string;
     location: string;
     country: string;
     admin: {
@@ -78,7 +79,8 @@ const campaigns: { [key: number]: Campaign } = {
     backedCampaigns: 12
   },
   school: {
-    name: "Green Valley High School",
+    name: "Stanford University",
+    cursus: "Computer Science MBA",
     location: "San Francisco",
     country: "United States",
     admin: {
@@ -111,7 +113,8 @@ const campaigns: { [key: number]: Campaign } = {
     backedCampaigns: 12
   },
   school: {
-    name: "Green Valley High School",
+    name: "Massachusetts Institute of Technology",
+    cursus:"Blockchain Engineering",
     location: "San Francisco",
     country: "United States",
     admin: {
@@ -144,7 +147,8 @@ const campaigns: { [key: number]: Campaign } = {
     backedCampaigns: 12
   },
   school: {
-    name: "Green Valley High School",
+    name: "UCLA",
+    cursus: "Digital Marketing",
     location: "San Francisco",
     country: "United States",
     admin: {
@@ -164,14 +168,14 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
   const router = useRouter()
 
   return (
-    <div className="bg-viovio/25 w-full h-full flex flex-col items-center gap-10 pb-20">
+    <div className="bg-viovio/25 w-full h-full flex flex-col items-center md:gap-10 gap-4 pb-20">
             
     <div className='w-full'>
     <Header/>
     </div>
         
 
-    <div className="flex flex-row gap-6">
+    <div className="flex md:flex-row flex-col items-center md:gap-6 gap-2">
 
         <Image src={`/profile-pic-${id}.JPG`} alt="profile pic" height={150} width={220} style={{borderRadius:"10px", objectFit: "cover"}}></Image>
         <div className="flex flex-col text-4xl p-4 pl-0">
@@ -183,7 +187,7 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
             </div>
             
         </div>
-        <Card className="mb-6">
+        <Card className="">
           <CardHeader>
             <CardTitle>About the Creator</CardTitle>
           </CardHeader>
@@ -211,7 +215,7 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
               </div>
               <div className="flex items-center">
                 <Award className="mr-2 h-4 w-4" />
-                <span>{campaigns[id].author.backedCampaigns} Backed</span>
+                <span>{campaigns[id].author.backedCampaigns} Supported</span>
               </div>
             </div>
           </CardContent>
@@ -246,16 +250,16 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
         {campaigns[id].longDescription}
     </Card>
 
-    <div className="flex md:flex-row flex-col w-[80%] justify-between">
+    <div className="flex md:flex-row flex-col w-[80%] justify-between gap-4">
 
-    <Card className="flex flex-col p-5 pb-0 rounded-lg bg-white text-2xl">
+    <Card className="flex flex-col p-5 pb-0 rounded-lg bg-white md:text-2xl text-xl">
         <div className="flex flex-row justify-between">
             <div>
                 Accepted to <br/>
-                <span className="font-bold">Stanford University</span> <br/> <br/>
-                in <span className="font-bold">Computer Science MBA</span>
+                <span className="font-bold">{campaigns[id].school.name}</span> <br/> <br/>
+                in <span className="font-bold">{campaigns[id].school.cursus}</span>
             </div>
-            <Image src={campaigns[id].uniPic} alt="" height={150} width={150}></Image>
+            <Image src={campaigns[id].uniPic} alt="" height={150} width={150} style={{borderRadius:"10px", objectFit: "cover"}}></Image>
         </div>
         <CardContent className="p-6">
             <Progress value={70} className="h-2 mb-4" />
@@ -303,15 +307,13 @@ export function CampaignDetails({ id }: { id: number } = { id: 1 }) {
      
 
         <iframe 
-        width="560" 
-        height="315" 
-        src={campaigns[id].linkVideo}
-        title="YouTube video player" 
-        frameBorder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowFullScreen
-        style={{borderRadius: '10px'}}
-    ></iframe>
+            className="w-full md:w-[560px] h-[200px] md:h-[315px] rounded-[10px]"
+            src={campaigns[id].linkVideo}
+            title="YouTube video player" 
+            frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowFullScreen
+        />
        
     </Card>
 

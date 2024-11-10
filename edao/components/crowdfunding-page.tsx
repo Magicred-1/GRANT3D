@@ -127,7 +127,6 @@ export default function ModernCrowdfundingPage() {
   const [showConfetti, setShowConfetti] = useState(false);
   const { width, height } = useWindowSize();
 
-<<<<<<< Updated upstream
   useEffect(() => {
     const loadCampaigns = async () => {
       try {
@@ -138,14 +137,6 @@ export default function ModernCrowdfundingPage() {
         setCampaigns([]); // Set campaigns to an empty array on error
       }
     };
-=======
-  const handleVote = (id: number, increment: number) => {
-    setCampaigns(prevCampaigns =>
-      prevcampaign.map(campaign =>
-        campaign.id === id ? { ...campaign, votes: campaign.votes + increment } : campaign
-      )
-    )
->>>>>>> Stashed changes
 
     loadCampaigns();
   }, []);
