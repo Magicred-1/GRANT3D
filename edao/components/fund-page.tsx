@@ -1,12 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, MouseEvent } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { ShieldCheck, Clock, PiggyBank, DollarSign } from "lucide-react"
 import Header from './Header'
-import {QRCodeSVG} from 'qrcode.react'
+import { QRCodeSVG } from 'qrcode.react'
 
 // Sample XRP reserve data
 const initialXRPData = {
@@ -22,6 +22,8 @@ const xrpWalletAddress = process.env.NEXT_PUBLIC_XRPL_ADDRESS || ""
 export default function FundPage() {
   const [reserveData, setReserveData] = useState(initialXRPData)
   const [selectedTab, setSelectedTab] = useState("XRP")
+  const [currency, setCurrency] = useState("USD")
+  const [fiatAmount, setFiatAmount] = useState<number | string>("")
 
   // Function to simulate refreshing proof of reserve data
   const refreshData = () => {
@@ -31,6 +33,10 @@ export default function FundPage() {
       lastAudit: new Date().toISOString().split('T')[0], // Update to today's date
       auditStatus: 'Verified'
     }))
+  }
+
+  function handleFiatDeposit(event: MouseEvent<HTMLButtonElement>): void {
+    throw new Error('Function not implemented.')
   }
 
   return (
@@ -92,9 +98,33 @@ export default function FundPage() {
                 {selectedTab === "FIAT" && (
                   <div className="mt-4">
                     <h3 className="text-lg font-semibold mb-2">Deposit in FIAT</h3>
-                    <p className="text-sm text-gray-700 mb-4">Enter the amount you would like to deposit in your preferred FIAT currency.</p>
-                    {/* FIAT deposit form goes here */}
-                    <Button variant="default">Confirm FIAT Deposit</Button>
+                    <p className="text-sm text-gray-700 mb-4">Enter the amount and currency you would like to deposit.</p>
+                    
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Currency</label>
+                      <select
+                        value={currency}
+                        onChange={(e) => setCurrency(e.target.value)}
+                        className="w-full p-2 border rounded"
+                      >
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                      </select>
+                    </div>
+
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Amount</label>
+                      <input
+                        type="number"
+                        value={fiatAmount}
+                        onChange={(e) => setFiatAmount(e.target.value)}
+                        placeholder="Enter amount"
+                        className="w-full p-2 border rounded"
+                      />
+                    </div>
+
+                    <Button variant="default" onClick={handleFiatDeposit}>Confirm FIAT Deposit</Button>
                   </div>
                 )}
               </DialogContent>
